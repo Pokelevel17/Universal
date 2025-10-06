@@ -9,16 +9,19 @@
 /* Home page specific styling */
 .home-container {
   text-align: center;
-  padding: 100px 20px;
+  padding: 80px 20px;
 }
 .home-container h1 {
   font-size: 48px;
   margin-bottom: 20px;
 }
-.home-container p {
+.home-container .description {
   font-size: 20px;
   margin-bottom: 20px;
   color: #ccc;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .home-container .quote {
   font-style: italic;
@@ -39,14 +42,31 @@
 .home-container a.start-btn:hover {
   background: #005fa3;
 }
+.home-container .credit {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #aaa;
+}
 </style>
 </head>
 <body>
 
 <div class="home-container">
   <h1>Welcome to Unblocked Games</h1>
-  <p class="quote" id="random-quote">Your quote will appear here</p>
+
+  <!-- Website Description -->
+  <p class="description">
+    Enjoy a huge collection of games that are fully unblocked and accessible anywhere! Play instantly in your browser without restrictions and have fun with friends or solo.
+  </p>
+
+  <!-- Random Quote -->
+  <p class="quote" id="random-quote"></p>
+
+  <!-- Start Playing Button -->
   <a class="start-btn" href="index.html">Start Playing</a>
+
+  <!-- Made By Credit -->
+  <p class="credit">Made By Fusionzzz</p>
 </div>
 
 <script>
