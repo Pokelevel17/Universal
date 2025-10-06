@@ -7,13 +7,21 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <header>
   <div class="container">
     <a href="index.html" class="back-btn">⬅ Back to games</a>
+    <div class="game-actions">
+      <button id="fullscreen-btn">Fullscreen</button>
+      <button id="share-btn">Copy Link</button>
+    </div>
   </div>
 </header>
+
 <main>
   <div class="container">
+    <h2 id="game-title">Game Name</h2>
+    <p id="game-description">Play this game in your browser!</p>
     <iframe id="game-frame" src="" width="100%" height="600"></iframe>
   </div>
 </main>
@@ -21,7 +29,33 @@
 <script>
 const params = new URLSearchParams(window.location.search);
 const url = params.get('url');
+const name = params.get('name') || "Game Name";
+const desc = params.get('desc') || "Play this game in your browser!";
+
 document.getElementById('game-frame').src = url;
+document.getElementById('game-title').textContent = name;
+document.getElementById('game-description').textContent = desc;
+
+// Fullscreen button
+const iframe = document.getElementById('game-frame');
+document.getElementById('fullscreen-btn').addEventListener('click', () => {
+  if (iframe.requestFullscreen) {
+    iframe.requestFullscreen();
+  } else if (iframe.webkitRequestFullscreen) { /* Safari */
+    iframe.webkitRequestFullscreen();
+  } else if (iframe.msRequestFullscreen) { /* IE11 */
+    iframe.msRequestFullscreen();
+  }
+});
+
+// Share button
+document.getElementById('share-btn').addEventListener('click', () => {
+  const gameLink = window.location.href;
+  navigator.clipboard.writeText(gameLink).then(() => {
+    alert('Game link copied!');
+  });
+});
 </script>
+
 </body>
 </html>
