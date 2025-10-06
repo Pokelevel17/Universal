@@ -2,16 +2,19 @@
   {
     "name": "2048",
     "url": "https://play2048.co/",
-    "thumbnail": "assets/2048.png"
+    "thumbnail": "assets/2048.png",
+    "category": "Puzzle"
   },
   {
     "name": "Tetris",
     "url": "https://tetris.com/play-tetris",
-    "thumbnail": "assets/tetris.png"
+    "thumbnail": "assets/tetris.png",
+    "category": "Arcade"
   },
   {
     "name": "Snake",
     "url": "https://playsnake.org/",
-    "thumbnail": "assets/snake.png"
+    "thumbnail": "assets/snake.png",
+    "category": "Arcade"
   }
 ]
