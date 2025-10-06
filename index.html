@@ -11,6 +11,9 @@
 <header>
   <div class="container">
     <h1>Unblocked Games</h1>
+    <nav>
+      <a href="home.html" style="margin-right:15px; color:#fff;">Home</a>
+    </nav>
     <div class="controls">
       <input type="text" id="search" placeholder="Search games...">
       <select id="category">
@@ -33,7 +36,7 @@
 </footer>
 
 <script>
-const GAMES_URL = 'games.json'; // JSON file with all games
+const GAMES_URL = 'games.json'; // JSON file containing all games
 
 async function loadGames() {
   const res = await fetch(GAMES_URL);
@@ -63,8 +66,8 @@ async function loadGames() {
         </div>
         <h2>${game.name}</h2>
         <span class="category">${game.category}</span>`;
-
-      // Make the entire card clickable
+      
+      // Make entire card clickable
       card.addEventListener('click', () => {
         window.location.href = `play.html?url=${encodeURIComponent(game.url)}&name=${encodeURIComponent(game.name)}&desc=${encodeURIComponent(game.description || '')}`;
       });
@@ -73,6 +76,7 @@ async function loadGames() {
     });
   }
 
+  // Filter games based on search and category
   function filterGames() {
     const searchTerm = search.value.toLowerCase();
     const selectedCategory = categorySelect.value;
@@ -91,5 +95,6 @@ async function loadGames() {
 
 loadGames();
 </script>
+
 </body>
 </html>
