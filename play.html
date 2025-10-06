@@ -11,10 +11,6 @@
 <header>
   <div class="container">
     <a href="index.html" class="back-btn">⬅ Back to games</a>
-    <div class="game-actions">
-      <button id="fullscreen-btn">Fullscreen</button>
-      <button id="share-btn">Copy Link</button>
-    </div>
   </div>
 </header>
 
@@ -32,28 +28,20 @@ const url = params.get('url');
 const name = params.get('name') || "Game Name";
 const desc = params.get('desc') || "Play this game in your browser!";
 
-document.getElementById('game-frame').src = url;
+const iframe = document.getElementById('game-frame');
 document.getElementById('game-title').textContent = name;
 document.getElementById('game-description').textContent = desc;
 
-// Fullscreen button
-const iframe = document.getElementById('game-frame');
-document.getElementById('fullscreen-btn').addEventListener('click', () => {
-  if (iframe.requestFullscreen) {
-    iframe.requestFullscreen();
-  } else if (iframe.webkitRequestFullscreen) { /* Safari */
-    iframe.webkitRequestFullscreen();
-  } else if (iframe.msRequestFullscreen) { /* IE11 */
-    iframe.msRequestFullscreen();
-  }
-});
-
-// Share button
-document.getElementById('share-btn').addEventListener('click', () => {
-  const gameLink = window.location.href;
-  navigator.clipboard.writeText(gameLink).then(() => {
-    alert('Game link copied!');
-  });
+// Set iframe source and request fullscreen automatically
+iframe.src = url;
+iframe.addEventListener('load', () => {
+    if (iframe.requestFullscreen) {
+        iframe.requestFullscreen();
+    } else if (iframe.webkitRequestFullscreen) { /* Safari */
+        iframe.webkitRequestFullscreen();
+    } else if (iframe.msRequestFullscreen) { /* IE11 */
+        iframe.msRequestFullscreen();
+    }
 });
 </script>
 
