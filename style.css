@@ -1,0 +1,10 @@
+body { font-family: Arial, sans-serif; padding: 20px; background: #f8f8f8; }
+h1 { text-align: center; }
+#search { display: block; margin: 10px auto; padding: 10px; width: 80%; max-width: 400px; }
+#games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 20px; }
+.game-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.2); text-align: center; transition: transform 0.2s; }
+.game-card:hover { transform: scale(1.05); }
+.game-card img { width: 100%; display: block; }
+.game-card p { padding: 10px; margin: 0; }
+.back-btn { display: block; margin-bottom: 10px; text-decoration: none; color: #333; font-weight: bold; }
+iframe { border: none; border-radius: 10px; }
