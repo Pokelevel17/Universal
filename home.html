@@ -6,14 +6,24 @@
 <title>Welcome to Unblocked Games</title>
 <link rel="stylesheet" href="style.css">
 <style>
-/* Full-screen animated background */
+/* Full-screen layout */
 body, html {
   margin: 0;
   padding: 0;
   height: 100%;
   font-family: 'Segoe UI', sans-serif;
-  color: #fff;
   overflow: hidden;
+  color: #fff;
+}
+
+/* Background layers */
+#particles-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
 
 body {
@@ -24,9 +34,11 @@ body {
   background: linear-gradient(-45deg, #1a1a1a, #222, #1a1a1a, #222);
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
+  position: relative;
+  z-index: 1;
 }
 
-/* Animate background gradient */
+/* Animate gradient background */
 @keyframes gradientBG {
   0% {background-position: 0% 50%;}
   50% {background-position: 100% 50%;}
@@ -36,6 +48,8 @@ body {
 .home-container {
   max-width: 700px;
   padding: 20px;
+  position: relative;
+  z-index: 2;
 }
 
 .home-container h1 {
@@ -80,6 +94,9 @@ body {
 </head>
 <body>
 
+<!-- Canvas for particles -->
+<canvas id="particles-canvas"></canvas>
+
 <div class="home-container">
   <h1>Welcome to Unblocked Games</h1>
 
@@ -99,6 +116,7 @@ body {
 </div>
 
 <script>
+// Random Quote
 const quotes = [
   "Universal On Top!",
   "Joshua Bush (if you know you know)",
@@ -107,10 +125,71 @@ const quotes = [
   "yawwwwwwwn",
   "I lowkey suck at coding"
 ];
-
-// Select a random quote each time the page loads
 const quoteElement = document.getElementById('random-quote');
 quoteElement.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+
+// Particle Animation
+const canvas = document.getElementById('particles-canvas');
+const ctx = canvas.getContext('2d');
+let particlesArray = [];
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// Particle class
+class Particle {
+  constructor() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 3 + 1;
+    this.speedX = Math.random() * 1 - 0.5;
+    this.speedY = Math.random() * 1 - 0.5;
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+
+    // Wrap around edges
+    if (this.x < 0) this.x = canvas.width;
+    if (this.x > canvas.width) this.x = 0;
+    if (this.y < 0) this.y = canvas.height;
+    if (this.y > canvas.height) this.y = 0;
+  }
+  draw() {
+    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+// Initialize particles
+function initParticles() {
+  particlesArray = [];
+  for (let i = 0; i < 100; i++) {
+    particlesArray.push(new Particle());
+  }
+}
+
+// Animate particles
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particlesArray.forEach(p => {
+    p.update();
+    p.draw();
+  });
+  requestAnimationFrame(animate);
+}
+
+initParticles();
+animate();
+
+// Resize canvas on window resize
+window.addEventListener('resize', () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  initParticles();
+});
 </script>
 
 </body>
