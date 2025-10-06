@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Fetch games from a GitHub repo dynamically
-const GITHUB_REPO_URL = 'https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_GITHUB_REPO/main/games.json';
+const GITHUB_REPO_URL = 'https://raw.githubusercontent.com/Pokelevel17/Universal/main/games.json';
 
 let games = [];
 
