@@ -36,7 +36,7 @@ document.getElementById('game-title').textContent = name;
 document.getElementById('game-description').textContent = desc;
 iframe.src = url;
 
-// Fullscreen button
+// Fullscreen button functionality
 document.getElementById('fullscreen-btn').addEventListener('click', () => {
   if (iframe.requestFullscreen) {
     iframe.requestFullscreen();
