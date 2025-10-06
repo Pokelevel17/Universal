@@ -11,6 +11,9 @@
 <header>
   <div class="container">
     <a href="index.html" class="back-btn">⬅ Back to games</a>
+    <div class="game-actions">
+      <button id="fullscreen-btn">Fullscreen</button>
+    </div>
   </div>
 </header>
 
@@ -31,17 +34,17 @@ const desc = params.get('desc') || "Play this game in your browser!";
 const iframe = document.getElementById('game-frame');
 document.getElementById('game-title').textContent = name;
 document.getElementById('game-description').textContent = desc;
-
-// Set iframe source and request fullscreen automatically
 iframe.src = url;
-iframe.addEventListener('load', () => {
-    if (iframe.requestFullscreen) {
-        iframe.requestFullscreen();
-    } else if (iframe.webkitRequestFullscreen) { /* Safari */
-        iframe.webkitRequestFullscreen();
-    } else if (iframe.msRequestFullscreen) { /* IE11 */
-        iframe.msRequestFullscreen();
-    }
+
+// Fullscreen button
+document.getElementById('fullscreen-btn').addEventListener('click', () => {
+  if (iframe.requestFullscreen) {
+    iframe.requestFullscreen();
+  } else if (iframe.webkitRequestFullscreen) {
+    iframe.webkitRequestFullscreen();
+  } else if (iframe.msRequestFullscreen) {
+    iframe.msRequestFullscreen();
+  }
 });
 </script>
 
