@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <header>
   <div class="container">
     <h1>Unblocked Games</h1>
@@ -41,6 +42,7 @@ async function loadGames() {
   const search = document.getElementById('search');
   const categorySelect = document.getElementById('category');
 
+  // Populate categories dynamically
   const categories = ['All', ...new Set(games.map(g => g.category))];
   categories.forEach(cat => {
     const option = document.createElement('option');
@@ -49,20 +51,44 @@ async function loadGames() {
     categorySelect.appendChild(option);
   });
 
+  // Render game cards
   function render(list) {
     grid.innerHTML = '';
     list.forEach(game => {
       const card = document.createElement('div');
       card.className = 'game-card';
       card.innerHTML = `
-        <a href="play.html?url=${encodeURIComponent(game.url)}">
-          <div class="thumb-container">
-            <img src="${game.thumbnail}" alt="${game.name}">
-          </div>
-          <h2>${game.name}</h2>
-          <span class="category">${game.category}</span>
-        </a>`;
+        <div class="thumb-container">
+          <img src="${game.thumbnail}" alt="${game.name}">
+        </div>
+        <h2>${game.name}</h2>
+        <span class="category">${game.category}</span>
+        <div class="card-actions">
+          <button class="fullscreen-btn" data-url="${game.url}">Fullscreen</button>
+        </div>`;
       grid.appendChild(card);
+    });
+
+    // Add fullscreen functionality to buttons
+    const buttons = document.querySelectorAll('.fullscreen-btn');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const url = btn.dataset.url;
+        const iframe = document.createElement('iframe');
+        iframe.src = url;
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.border = 'none';
+        document.body.innerHTML = '';
+        document.body.appendChild(iframe);
+        if (iframe.requestFullscreen) {
+          iframe.requestFullscreen();
+        } else if (iframe.webkitRequestFullscreen) { /* Safari */
+          iframe.webkitRequestFullscreen();
+        } else if (iframe.msRequestFullscreen) { /* IE11 */
+          iframe.msRequestFullscreen();
+        }
+      });
     });
   }
 
