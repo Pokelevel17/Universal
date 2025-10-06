@@ -7,16 +7,23 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Unblocked Games</h1>
+<header>
+    <h1>Unblocked Games</h1>
+    <div class="controls">
+        <input type="text" id="search" placeholder="Search games...">
+        <select id="category">
+            <option value="All">All Categories</option>
+        </select>
+    </div>
+</header>
 
-<div class="controls">
-    <input type="text" id="search" placeholder="Search games...">
-    <select id="category">
-        <option value="All">All Categories</option>
-    </select>
-</div>
+<main>
+    <div id="games-grid"></div>
+</main>
 
-<div id="games-grid"></div>
+<footer>
+    <p>© 2025 Unblocked Games</p>
+</footer>
 
 <script>
 const GAMES_URL = 'games.json'; // Replace with GitHub raw URL for dynamic updates
@@ -44,8 +51,10 @@ async function loadGames() {
             card.className = 'game-card';
             card.innerHTML = `
                 <a href="play.html?url=${encodeURIComponent(game.url)}">
-                    <img src="${game.thumbnail}" alt="${game.name}">
-                    <p>${game.name}</p>
+                    <div class="thumb-container">
+                        <img src="${game.thumbnail}" alt="${game.name}">
+                    </div>
+                    <h2>${game.name}</h2>
                     <span class="category">${game.category}</span>
                 </a>`;
             grid.appendChild(card);
