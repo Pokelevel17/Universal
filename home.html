@@ -17,8 +17,14 @@
 }
 .home-container p {
   font-size: 20px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   color: #ccc;
+}
+.home-container .quote {
+  font-style: italic;
+  margin-bottom: 40px;
+  color: #ffcc00;
+  font-size: 18px;
 }
 .home-container a.start-btn {
   display: inline-block;
@@ -39,9 +45,24 @@
 
 <div class="home-container">
   <h1>Welcome to Unblocked Games</h1>
-  <p>Play your favorite games instantly, without restrictions, anywhere!</p>
+  <p class="quote" id="random-quote">Your quote will appear here</p>
   <a class="start-btn" href="index.html">Start Playing</a>
 </div>
+
+<script>
+const quotes = [
+  "Universal On Top!",
+  "Joshua Bush (if you know you know)",
+  "676767",
+  "Wash ma belly",
+  "yawwwwwwwn",
+  "I lowkey suck at coding"
+];
+
+// Select a random quote each time the page loads
+const quoteElement = document.getElementById('random-quote');
+quoteElement.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+</script>
 
 </body>
 </html>
