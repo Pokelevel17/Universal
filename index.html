@@ -8,17 +8,34 @@
 </head>
 <body>
 <h1>Unblocked Games</h1>
-<input type="text" id="search" placeholder="Search games...">
+
+<div class="controls">
+    <input type="text" id="search" placeholder="Search games...">
+    <select id="category">
+        <option value="All">All Categories</option>
+    </select>
+</div>
+
 <div id="games-grid"></div>
 
 <script>
-const GAMES_URL = 'games.json'; // Or GitHub raw URL
+const GAMES_URL = 'games.json'; // Replace with GitHub raw URL for dynamic updates
 
 async function loadGames() {
     const res = await fetch(GAMES_URL);
     const games = await res.json();
     const grid = document.getElementById('games-grid');
     const search = document.getElementById('search');
+    const categorySelect = document.getElementById('category');
+
+    // Populate categories dynamically
+    const categories = ['All', ...new Set(games.map(g => g.category))];
+    categories.forEach(cat => {
+        const option = document.createElement('option');
+        option.value = cat;
+        option.textContent = cat;
+        categorySelect.appendChild(option);
+    });
 
     function render(list) {
         grid.innerHTML = '';
@@ -29,17 +46,26 @@ async function loadGames() {
                 <a href="play.html?url=${encodeURIComponent(game.url)}">
                     <img src="${game.thumbnail}" alt="${game.name}">
                     <p>${game.name}</p>
+                    <span class="category">${game.category}</span>
                 </a>`;
             grid.appendChild(card);
         });
     }
 
-    render(games);
-
-    search.addEventListener('input', () => {
-        const filtered = games.filter(g => g.name.toLowerCase().includes(search.value.toLowerCase()));
+    function filterGames() {
+        const searchTerm = search.value.toLowerCase();
+        const selectedCategory = categorySelect.value;
+        const filtered = games.filter(g => 
+            g.name.toLowerCase().includes(searchTerm) &&
+            (selectedCategory === 'All' || g.category === selectedCategory)
+        );
         render(filtered);
-    });
+    }
+
+    search.addEventListener('input', filterGames);
+    categorySelect.addEventListener('change', filterGames);
+
+    render(games);
 }
 
 loadGames();
