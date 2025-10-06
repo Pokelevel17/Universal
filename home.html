@@ -6,29 +6,56 @@
 <title>Welcome to Unblocked Games</title>
 <link rel="stylesheet" href="style.css">
 <style>
-/* Home page specific styling */
-.home-container {
-  text-align: center;
-  padding: 80px 20px;
+/* Full-screen animated background */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  color: #fff;
+  overflow: hidden;
 }
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(-45deg, #1a1a1a, #222, #1a1a1a, #222);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+
+/* Animate background gradient */
+@keyframes gradientBG {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+.home-container {
+  max-width: 700px;
+  padding: 20px;
+}
+
 .home-container h1 {
   font-size: 48px;
   margin-bottom: 20px;
 }
+
 .home-container .description {
   font-size: 20px;
   margin-bottom: 20px;
   color: #ccc;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
 }
+
 .home-container .quote {
   font-style: italic;
   margin-bottom: 40px;
   color: #ffcc00;
   font-size: 18px;
 }
+
 .home-container a.start-btn {
   display: inline-block;
   padding: 15px 30px;
@@ -39,9 +66,11 @@
   text-decoration: none;
   transition: 0.2s;
 }
+
 .home-container a.start-btn:hover {
   background: #005fa3;
 }
+
 .home-container .credit {
   margin-top: 15px;
   font-size: 14px;
