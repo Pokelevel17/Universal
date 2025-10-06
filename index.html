@@ -33,7 +33,7 @@
 </footer>
 
 <script>
-const GAMES_URL = 'games.json'; // Your JSON file with all games
+const GAMES_URL = 'games.json'; // Your games JSON file
 
 async function loadGames() {
   const res = await fetch(GAMES_URL);
@@ -42,7 +42,7 @@ async function loadGames() {
   const search = document.getElementById('search');
   const categorySelect = document.getElementById('category');
 
-  // Populate categories dynamically
+  // Populate categories
   const categories = ['All', ...new Set(games.map(g => g.category))];
   categories.forEach(cat => {
     const option = document.createElement('option');
@@ -51,7 +51,6 @@ async function loadGames() {
     categorySelect.appendChild(option);
   });
 
-  // Render game cards
   function render(list) {
     grid.innerHTML = '';
     list.forEach(game => {
@@ -64,69 +63,11 @@ async function loadGames() {
         <h2>${game.name}</h2>
         <span class="category">${game.category}</span>
         <div class="card-actions">
-          <button class="fullscreen-btn" data-url="${game.url}">Play Fullscreen</button>
+          <a class="play-btn" href="play.html?url=${encodeURIComponent(game.url)}&name=${encodeURIComponent(game.name)}&desc=${encodeURIComponent(game.description || '')}">
+            Play
+          </a>
         </div>`;
       grid.appendChild(card);
-    });
-
-    // Fullscreen functionality for all buttons
-    const buttons = document.querySelectorAll('.fullscreen-btn');
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const url = btn.dataset.url;
-        
-        // Create overlay
-        const overlay = document.createElement('div');
-        overlay.id = 'game-overlay';
-        overlay.style.position = 'fixed';
-        overlay.style.top = '0';
-        overlay.style.left = '0';
-        overlay.style.width = '100vw';
-        overlay.style.height = '100vh';
-        overlay.style.background = '#121212';
-        overlay.style.zIndex = '9999';
-        overlay.style.display = 'flex';
-        overlay.style.flexDirection = 'column';
-        overlay.style.alignItems = 'center';
-        overlay.style.justifyContent = 'center';
-
-        // Back button
-        const backBtn = document.createElement('button');
-        backBtn.textContent = '⬅ Back';
-        backBtn.style.position = 'absolute';
-        backBtn.style.top = '10px';
-        backBtn.style.left = '10px';
-        backBtn.style.padding = '8px 15px';
-        backBtn.style.border = 'none';
-        backBtn.style.borderRadius = '6px';
-        backBtn.style.background = '#0078d7';
-        backBtn.style.color = '#fff';
-        backBtn.style.cursor = 'pointer';
-        backBtn.addEventListener('click', () => {
-          document.body.removeChild(overlay);
-          if (document.fullscreenElement) document.exitFullscreen();
-        });
-
-        // Game iframe
-        const iframe = document.createElement('iframe');
-        iframe.src = url;
-        iframe.style.width = '100%';
-        iframe.style.height = '100%';
-        iframe.style.border = 'none';
-
-        overlay.appendChild(backBtn);
-        overlay.appendChild(iframe);
-        document.body.appendChild(overlay);
-
-        // Request fullscreen
-        if (overlay.requestFullscreen) {
-          overlay.requestFullscreen();
-        } else if (overlay.webkitRequestFullscreen) {
-          overlay.webkitRequestFullscreen();
-        } else if (overlay.msRequestFullscreen) {
-          overlay.msRequestFullscreen();
-        }
-      });
     });
   }
 
@@ -148,6 +89,5 @@ async function loadGames() {
 
 loadGames();
 </script>
-
 </body>
 </html>
