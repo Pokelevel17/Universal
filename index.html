@@ -33,7 +33,7 @@
 </footer>
 
 <script>
-const GAMES_URL = 'games.json'; // Your games JSON file
+const GAMES_URL = 'games.json'; // JSON file with all games
 
 async function loadGames() {
   const res = await fetch(GAMES_URL);
@@ -42,7 +42,7 @@ async function loadGames() {
   const search = document.getElementById('search');
   const categorySelect = document.getElementById('category');
 
-  // Populate categories
+  // Populate categories dynamically
   const categories = ['All', ...new Set(games.map(g => g.category))];
   categories.forEach(cat => {
     const option = document.createElement('option');
@@ -51,6 +51,7 @@ async function loadGames() {
     categorySelect.appendChild(option);
   });
 
+  // Render game cards
   function render(list) {
     grid.innerHTML = '';
     list.forEach(game => {
@@ -61,12 +62,13 @@ async function loadGames() {
           <img src="${game.thumbnail}" alt="${game.name}">
         </div>
         <h2>${game.name}</h2>
-        <span class="category">${game.category}</span>
-        <div class="card-actions">
-          <a class="play-btn" href="play.html?url=${encodeURIComponent(game.url)}&name=${encodeURIComponent(game.name)}&desc=${encodeURIComponent(game.description || '')}">
-            Play
-          </a>
-        </div>`;
+        <span class="category">${game.category}</span>`;
+
+      // Make the entire card clickable
+      card.addEventListener('click', () => {
+        window.location.href = `play.html?url=${encodeURIComponent(game.url)}&name=${encodeURIComponent(game.name)}&desc=${encodeURIComponent(game.description || '')}`;
+      });
+
       grid.appendChild(card);
     });
   }
