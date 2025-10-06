@@ -33,7 +33,7 @@
 </footer>
 
 <script>
-const GAMES_URL = 'games.json'; // Replace with GitHub raw URL if dynamic
+const GAMES_URL = 'games.json'; // JSON with all game data
 
 async function loadGames() {
   const res = await fetch(GAMES_URL);
@@ -51,7 +51,6 @@ async function loadGames() {
     categorySelect.appendChild(option);
   });
 
-  // Render game cards
   function render(list) {
     grid.innerHTML = '';
     list.forEach(game => {
@@ -64,31 +63,11 @@ async function loadGames() {
         <h2>${game.name}</h2>
         <span class="category">${game.category}</span>
         <div class="card-actions">
-          <button class="fullscreen-btn" data-url="${game.url}">Fullscreen</button>
+          <a class="fullscreen-btn" href="play.html?url=${encodeURIComponent(game.url)}&name=${encodeURIComponent(game.name)}&desc=${encodeURIComponent(game.description || '')}">
+            Play Fullscreen
+          </a>
         </div>`;
       grid.appendChild(card);
-    });
-
-    // Add fullscreen functionality to buttons
-    const buttons = document.querySelectorAll('.fullscreen-btn');
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const url = btn.dataset.url;
-        const iframe = document.createElement('iframe');
-        iframe.src = url;
-        iframe.style.width = '100%';
-        iframe.style.height = '100%';
-        iframe.style.border = 'none';
-        document.body.innerHTML = '';
-        document.body.appendChild(iframe);
-        if (iframe.requestFullscreen) {
-          iframe.requestFullscreen();
-        } else if (iframe.webkitRequestFullscreen) { /* Safari */
-          iframe.webkitRequestFullscreen();
-        } else if (iframe.msRequestFullscreen) { /* IE11 */
-          iframe.msRequestFullscreen();
-        }
-      });
     });
   }
 
