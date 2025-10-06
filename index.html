@@ -6,34 +6,52 @@
 <title>Unblocked Games</title>
 <link rel="stylesheet" href="style.css">
 <style>
-body, html {margin:0;padding:0;height:100%;font-family:'Segoe UI',sans-serif;color:#fff;overflow-x:hidden;position:relative;}
-#particles-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;}
-body{background:linear-gradient(-45deg,#1a1a1a,#222,#1a1a1a,#222);background-size:400% 400%;animation:gradientBG 15s ease infinite;}
+body, html {
+  margin:0; padding:0; height:100%; font-family:'Segoe UI', sans-serif; color:#fff; overflow-x:hidden; position:relative;
+}
+#particles-canvas{
+  position:fixed; top:0; left:0; width:100%; height:100%; z-index:0;
+}
+body{
+  background:linear-gradient(-45deg,#1a1a1a,#222,#1a1a1a,#222);
+  background-size:400% 400%; animation:gradientBG 15s ease infinite;
+}
 @keyframes gradientBG{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
 
 .container{position:relative; z-index:1; max-width:1200px; margin:auto; padding:20px;}
-#games-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:25px; justify-items:center; margin-top:20px;}
-
+#games-grid{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-start;
+  gap:15px;
+}
 .game-card{
-  background:rgba(0,0,0,0.7);
-  width:200px; height:250px;
+  background:rgba(0,0,0,0.6);
+  width:160px; height:200px;
   display:flex; flex-direction:column; align-items:center;
-  padding:10px; border-radius:12px;
-  cursor:pointer; transition:transform 0.3s, box-shadow 0.3s;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  padding:10px; border-radius:8px; cursor:pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 .game-card:hover{
   transform:scale(1.05);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+  box-shadow:0 6px 15px rgba(0,0,0,0.5);
 }
-.thumb-container{width:100%; height:150px; overflow:hidden; border-radius:10px;}
-.thumb-container img{width:100%; height:100%; object-fit:cover;}
-h2{font-size:18px; margin:10px 0 5px 0; text-align:center;}
-.category{font-size:12px; color:#ccc;}
-
-/* Controls */
+.thumb-container{
+  width:100%; height:120px; overflow:hidden; border-radius:6px;
+}
+.thumb-container img{
+  width:100%; height:100%; object-fit:cover;
+}
+h2{
+  font-size:16px; margin:8px 0 4px 0; text-align:center;
+}
+.category{
+  font-size:12px; color:#ccc;
+}
 .controls{display:flex; gap:10px; margin-bottom:10px;}
-input, select{padding:6px 10px; border-radius:6px; border:none; background:#333; color:#fff;}
+input, select{
+  padding:6px 10px; border-radius:5px; border:none; background:#333; color:#fff;
+}
 input::placeholder{color:#bbb;}
 </style>
 </head>
@@ -66,7 +84,7 @@ async function loadGames(){
   const grid=document.getElementById('games-grid');
   const search=document.getElementById('search');
   const categorySelect=document.getElementById('category');
-  
+
   const categories=['All',...new Set(games.map(g=>g.category))];
   categories.forEach(cat=>{const opt=document.createElement('option'); opt.value=cat; opt.textContent=cat; categorySelect.appendChild(opt);});
 
@@ -88,7 +106,6 @@ async function loadGames(){
 
   search.addEventListener('input',filterGames);
   categorySelect.addEventListener('change',filterGames);
-
   render(games);
 }
 loadGames();
