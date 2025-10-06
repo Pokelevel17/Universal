@@ -8,73 +8,78 @@
 </head>
 <body>
 <header>
+  <div class="container">
     <h1>Unblocked Games</h1>
     <div class="controls">
-        <input type="text" id="search" placeholder="Search games...">
-        <select id="category">
-            <option value="All">All Categories</option>
-        </select>
+      <input type="text" id="search" placeholder="Search games...">
+      <select id="category">
+        <option value="All">All Categories</option>
+      </select>
     </div>
+  </div>
 </header>
 
 <main>
+  <div class="container">
     <div id="games-grid"></div>
+  </div>
 </main>
 
 <footer>
+  <div class="container">
     <p>© 2025 Unblocked Games</p>
+  </div>
 </footer>
 
 <script>
-const GAMES_URL = 'games.json'; // Replace with GitHub raw URL for dynamic updates
+const GAMES_URL = 'games.json'; // Replace with GitHub raw URL if dynamic
 
 async function loadGames() {
-    const res = await fetch(GAMES_URL);
-    const games = await res.json();
-    const grid = document.getElementById('games-grid');
-    const search = document.getElementById('search');
-    const categorySelect = document.getElementById('category');
+  const res = await fetch(GAMES_URL);
+  const games = await res.json();
+  const grid = document.getElementById('games-grid');
+  const search = document.getElementById('search');
+  const categorySelect = document.getElementById('category');
 
-    // Populate categories dynamically
-    const categories = ['All', ...new Set(games.map(g => g.category))];
-    categories.forEach(cat => {
-        const option = document.createElement('option');
-        option.value = cat;
-        option.textContent = cat;
-        categorySelect.appendChild(option);
+  const categories = ['All', ...new Set(games.map(g => g.category))];
+  categories.forEach(cat => {
+    const option = document.createElement('option');
+    option.value = cat;
+    option.textContent = cat;
+    categorySelect.appendChild(option);
+  });
+
+  function render(list) {
+    grid.innerHTML = '';
+    list.forEach(game => {
+      const card = document.createElement('div');
+      card.className = 'game-card';
+      card.innerHTML = `
+        <a href="play.html?url=${encodeURIComponent(game.url)}">
+          <div class="thumb-container">
+            <img src="${game.thumbnail}" alt="${game.name}">
+          </div>
+          <h2>${game.name}</h2>
+          <span class="category">${game.category}</span>
+        </a>`;
+      grid.appendChild(card);
     });
+  }
 
-    function render(list) {
-        grid.innerHTML = '';
-        list.forEach(game => {
-            const card = document.createElement('div');
-            card.className = 'game-card';
-            card.innerHTML = `
-                <a href="play.html?url=${encodeURIComponent(game.url)}">
-                    <div class="thumb-container">
-                        <img src="${game.thumbnail}" alt="${game.name}">
-                    </div>
-                    <h2>${game.name}</h2>
-                    <span class="category">${game.category}</span>
-                </a>`;
-            grid.appendChild(card);
-        });
-    }
+  function filterGames() {
+    const searchTerm = search.value.toLowerCase();
+    const selectedCategory = categorySelect.value;
+    const filtered = games.filter(g =>
+      g.name.toLowerCase().includes(searchTerm) &&
+      (selectedCategory === 'All' || g.category === selectedCategory)
+    );
+    render(filtered);
+  }
 
-    function filterGames() {
-        const searchTerm = search.value.toLowerCase();
-        const selectedCategory = categorySelect.value;
-        const filtered = games.filter(g => 
-            g.name.toLowerCase().includes(searchTerm) &&
-            (selectedCategory === 'All' || g.category === selectedCategory)
-        );
-        render(filtered);
-    }
+  search.addEventListener('input', filterGames);
+  categorySelect.addEventListener('change', filterGames);
 
-    search.addEventListener('input', filterGames);
-    categorySelect.addEventListener('change', filterGames);
-
-    render(games);
+  render(games);
 }
 
 loadGames();
