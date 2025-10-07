@@ -5,18 +5,43 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Play Game</title>
 <style>
-body, html{margin:0;padding:0;height:100%;display:flex;flex-direction:column;font-family:sans-serif;background:#111;color:#fff;}
-header{display:flex;justify-content:flex-end;gap:10px;padding:10px;background:#222;}
-iframe{flex:1;width:100%;border:none;}
-button{padding:5px 10px;border:none;border-radius:5px;background:#0078d7;color:#fff;cursor:pointer;}
-button:hover{background:#005fa3;}
+body, html {
+  margin:0; padding:0; height:100%; display:flex; flex-direction:column; font-family:'Segoe UI', sans-serif; background:#111; color:#fff;
+}
+
+/* Header with buttons */
+header {
+  display:flex; justify-content:flex-end; gap:10px; padding:10px; background:#222;
+}
+
+/* Buttons styling */
+header button {
+  padding:8px 16px;
+  font-size:14px;
+  border:none;
+  border-radius:5px;
+  background:#0078d7;
+  color:#fff;
+  cursor:pointer;
+  transition:0.2s;
+  min-width:120px;  /* same width for both */
+}
+header button:hover {
+  background:#005fa3;
+}
+
+/* Game iframe */
+iframe {
+  flex:1; width:100%; border:none;
+}
 </style>
 </head>
 <body>
 <header>
-<button onclick="goBack()">Back to Games</button>
-<button onclick="fullscreenGame()">Fullscreen</button>
+  <button onclick="goBack()">Back to Games</button>
+  <button onclick="fullscreenGame()">Fullscreen</button>
 </header>
+
 <iframe id="gameFrame" src=""></iframe>
 
 <script>
