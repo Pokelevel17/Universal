@@ -1,66 +1,139 @@
-/* ==========================
-   Reset & Basics
-========================== */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #121212; color: #eee; line-height: 1.5; }
-a { text-decoration: none; color: inherit; }
-.container { max-width: 1200px; margin: 0 auto; padding: 0 15px; }
-
-/* ==========================
-   Header
-========================== */
-header { background: #1e1e1e; color: #eee; padding: 20px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
-header h1 { text-align: center; font-size: 28px; margin-bottom: 10px; }
-header .controls { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-header input, header select { padding: 10px 15px; border-radius: 6px; border: none; font-size: 14px; outline: none; background: #2a2a2a; color: #eee; }
-header input::placeholder { color: #aaa; }
-
-/* ==========================
-   Main Grid (Game Cards)
-========================== */
-main { padding: 30px 0; }
-#games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; }
-
-.game-card { background: #1e1e1e; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.7); transition: transform 0.2s, box-shadow 0.2s; text-align: center; }
-.game-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.9); }
-.game-card .thumb-container { width: 100%; padding-top: 56.25%; position: relative; overflow: hidden; }
-.game-card img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
-.game-card h2 { font-size: 16px; font-weight: 600; margin: 10px 0 5px; }
-.game-card .category { font-size: 12px; color: #aaa; margin-bottom: 10px; display: block; }
-
-/* ==========================
-   Footer
-========================== */
-footer { text-align: center; padding: 20px 0; font-size: 13px; color: #aaa; background: #1e1e1e; border-top: 1px solid #333; }
-
-/* ==========================
-   Play Page
-========================== */
-.back-btn { display: inline-block; margin: 10px 0; padding: 8px 15px; border-radius: 6px; background: #0078d7; color: #fff; transition: 0.2s; }
-.back-btn:hover { background: #005fa3; }
-iframe { width: 100%; height: 600px; border: none; border-radius: 10px; margin-bottom: 20px; }
-
-/* Game title and description */
-#game-title { text-align: center; margin: 20px 0 10px; font-size: 22px; font-weight: 600; }
-#game-description { text-align: center; font-size: 14px; color: #ccc; margin-bottom: 20px; }
-
-/* Game actions (fullscreen & share) */
-.game-actions { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
-.game-actions button {
-    padding: 8px 15px;
-    border: none;
-    border-radius: 6px;
-    background: #0078d7;
-    color: #fff;
-    cursor: pointer;
-    transition: 0.2s;
+/* General Reset */
+body, html {
+  margin:0;
+  padding:0;
+  font-family:'Segoe UI',sans-serif;
+  color:#fff;
+  overflow-x:hidden;
+  position:relative;
 }
-.game-actions button:hover { background: #005fa3; }
 
-/* ==========================
-   Responsive
-========================== */
-@media (max-width: 600px) {
-    #games-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
-    header input, header select { width: 100%; max-width: 250px; }
+/* Gradient background */
+body{
+  background: linear-gradient(-45deg,#1a1a1a,#222,#1a1a1a,#222);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+@keyframes gradientBG{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+/* Particle canvas */
+#particles-canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:0;
+}
+
+/* Container */
+.container{
+  position:relative;
+  z-index:1;
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
+}
+
+/* Quotes */
+#quote{
+  font-style:italic;
+  color:#ccc;
+  text-align:center;
+  margin-bottom:15px;
+}
+
+/* Controls */
+.controls{
+  display:flex;
+  gap:10px;
+  margin-bottom:15px;
+  justify-content:center;
+}
+input, select{
+  padding:6px 10px;
+  border-radius:5px;
+  border:none;
+  background:#333;
+  color:#fff;
+}
+input::placeholder{color:#bbb;}
+
+/* Games Grid */
+#games-grid{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-start;
+  gap:15px;
+}
+
+/* Game Card */
+.game-card{
+  background:rgba(0,0,0,0.6);
+  width:160px;
+  height:200px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:10px;
+  border-radius:8px;
+  cursor:pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.game-card:hover{
+  transform:scale(1.05);
+  box-shadow:0 6px 15px rgba(0,0,0,0.5);
+}
+.thumb-container{
+  width:100%;
+  height:120px;
+  overflow:hidden;
+  border-radius:6px;
+}
+.thumb-container img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+h2{
+  font-size:16px;
+  margin:8px 0 4px 0;
+  text-align:center;
+}
+.category{
+  font-size:12px;
+  color:#ccc;
+  text-align:center;
+}
+
+/* Play page controls */
+#controls{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  margin-bottom:10px;
+}
+button, .back-btn{
+  padding:12px 24px;
+  border:none;
+  border-radius:25px;
+  background:#0078d7;
+  color:#fff;
+  cursor:pointer;
+  font-size:16px;
+  width:130px;
+  text-align:center;
+  transition:0.2s;
+  text-decoration:none;
+}
+button:hover, .back-btn:hover{background:#005fa3;}
+iframe{
+  border:none;
+  border-radius:12px;
+  width:100%;
+  height:600px;
 }
