@@ -5,6 +5,66 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Unblocked Games</title>
 <link rel="stylesheet" href="style.css">
+<style>
+/* Gradient background + particles handled via canvas in JS */
+body, html {
+  margin:0;
+  padding:0;
+  height:100%;
+  font-family:'Segoe UI',sans-serif;
+  color:#fff;
+  overflow-x:hidden;
+  position:relative;
+}
+body{
+  background: linear-gradient(-45deg,#1a1a1a,#222,#1a1a1a,#222);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+@keyframes gradientBG{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+#particles-canvas{
+  position:fixed; top:0; left:0; width:100%; height:100%; z-index:0;
+}
+.container{
+  position:relative; z-index:1; max-width:1200px; margin:auto; padding:20px;
+}
+#quote{
+  font-style:italic; color:#ccc; text-align:center; margin-bottom:15px;
+}
+.controls{
+  display:flex; gap:10px; margin-bottom:15px; justify-content:center;
+}
+input, select{
+  padding:6px 10px; border-radius:5px; border:none; background:#333; color:#fff;
+}
+input::placeholder{color:#bbb;}
+#games-grid{
+  display:flex; flex-wrap:wrap; justify-content:flex-start; gap:15px;
+}
+.game-card{
+  background:rgba(0,0,0,0.6);
+  width:160px; height:200px;
+  display:flex; flex-direction:column; align-items:center;
+  padding:10px; border-radius:8px; cursor:pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.game-card:hover{
+  transform:scale(1.05);
+  box-shadow:0 6px 15px rgba(0,0,0,0.5);
+}
+.thumb-container{
+  width:100%; height:120px; overflow:hidden; border-radius:6px;
+}
+.thumb-container img{
+  width:100%; height:100%; object-fit:cover;
+}
+h2{font-size:16px; margin:8px 0 4px 0; text-align:center;}
+.category{font-size:12px; color:#ccc; text-align:center;}
+</style>
 </head>
 <body>
 
@@ -25,7 +85,7 @@
 </div>
 
 <script>
-// Particles
+// ===== Particles animation =====
 const canvas = document.getElementById('particles-canvas');
 const ctx = canvas.getContext('2d');
 let particlesArray = [];
@@ -43,10 +103,10 @@ class Particle {
   update() {
     this.x += this.speedX;
     this.y += this.speedY;
-    if(this.x<0) this.x=canvas.width;
-    if(this.x>canvas.width) this.x=0;
-    if(this.y<0) this.y=canvas.height;
-    if(this.y>canvas.height) this.y=0;
+    if(this.x<0)this.x=canvas.width;
+    if(this.x>canvas.width)this.x=0;
+    if(this.y<0)this.y=canvas.height;
+    if(this.y>canvas.height)this.y=0;
   }
   draw() {
     ctx.fillStyle = 'rgba(255,255,255,0.7)';
@@ -57,7 +117,7 @@ class Particle {
 }
 
 function initParticles() {
-  particlesArray = [];
+  particlesArray=[];
   for(let i=0;i<100;i++) particlesArray.push(new Particle());
 }
 function animateParticles() {
@@ -69,12 +129,12 @@ initParticles();
 animateParticles();
 window.addEventListener('resize',()=>{canvas.width=window.innerWidth; canvas.height=window.innerHeight; initParticles();});
 
-// Random quotes
-const quotes = ["Universal On Top!","Joshua Bush (if you know you know)","676767","Wash ma belly","yawwwwwwwn","I lowkey suck at coding"];
+// ===== Random quotes =====
+const quotes=["Universal On Top!","Joshua Bush (if you know you know)","676767","Wash ma belly","yawwwwwwwn","I lowkey suck at coding"];
 document.getElementById('quote').textContent = quotes[Math.floor(Math.random()*quotes.length)];
 
-// Load games
-const GAMES_URL = 'games.json';
+// ===== Load games from home.json =====
+const GAMES_URL = 'home.json';
 
 async function loadGames() {
   const res = await fetch(GAMES_URL);
@@ -96,8 +156,14 @@ async function loadGames() {
     list.forEach(game=>{
       const card = document.createElement('div');
       card.className = 'game-card';
-      card.innerHTML = `<div class="thumb-container"><img src="${game.thumbnail}" alt="${game.name}"></div><h2>${game.name}</h2><span class="category">${game.category}</span>`;
-      card.addEventListener('click',()=>{window.location.href=`play.html?url=${encodeURIComponent(game.url)}&name=${encodeURIComponent(game.name)}`;});
+      card.innerHTML = `
+        <div class="thumb-container"><img src="${game.thumbnail}" alt="${game.name}"></div>
+        <h2>${game.name}</h2>
+        <span class="category">${game.category}</span>
+      `;
+      card.addEventListener('click',()=>{
+        window.location.href=`play.html?url=${encodeURIComponent(game.url)}&name=${encodeURIComponent(game.name)}`;
+      });
       grid.appendChild(card);
     });
   }
@@ -108,10 +174,11 @@ async function loadGames() {
     render(games.filter(g=>g.name.toLowerCase().includes(term) && (cat==='All'||g.category===cat)));
   }
 
-  search.addEventListener('input',filterGames);
-  categorySelect.addEventListener('change',filterGames);
-  render(games);
+  search.addEventListener('input', filterGames);
+  categorySelect.addEventListener('change', filterGames);
+  render(games); // initial render
 }
+
 loadGames();
 </script>
 
