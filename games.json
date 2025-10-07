@@ -1,9 +1,9 @@
 [
   {
-    "name": "2048",
-    "url": "https://play2048.co/",
-    "thumbnail": "https://play-lh.googleusercontent.com/vQ76wSmsuUnwrMYlbAjCUTSLe5pfmHouJhVJYX80G79rbPxPkdKkLLBmEHpeIG_Zsib_",
-    "category": "Puzzle"
+    "name": "Doge Miner",
+    "url": "games/DogeMiner/index.html",
+    "thumbnail": "https://www.dolldivine.com/images/doge-coin-miner-game.png",
+    "category": "Clicker"
   },
   {
     "name": "Tetris",
