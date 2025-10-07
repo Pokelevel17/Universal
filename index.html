@@ -79,6 +79,7 @@ body {
   font-size: 18px;
   text-decoration: none;
   transition: 0.2s;
+  cursor: pointer;
 }
 
 .home-container a.start-btn:hover {
@@ -109,7 +110,7 @@ body {
   <p class="quote" id="random-quote"></p>
 
   <!-- Start Playing Button -->
-  <a class="start-btn" href="index.html">Start Playing</a>
+  <a class="start-btn" id="start-btn">Start Playing</a>
 
   <!-- Made By Credit -->
   <p class="credit">Made By Fusionzzz</p>
@@ -127,6 +128,11 @@ const quotes = [
 ];
 const quoteElement = document.getElementById('random-quote');
 quoteElement.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+
+// Redirect Start Button to games.html
+document.getElementById('start-btn').addEventListener('click', () => {
+  window.location.href = 'games.html';
+});
 
 // Particle Animation
 const canvas = document.getElementById('particles-canvas');
