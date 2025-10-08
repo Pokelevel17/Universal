@@ -1,20 +1,50 @@
 [
   {
-    "name": "Doge Miner",
-    "url": "games/DogeMiner/index.html",
-    "thumbnail": "https://www.dolldivine.com/images/doge-coin-miner-game.png",
-    "category": "Clicker"
+    "name": "1",
+    "url": "Games/1/index.html",
+    "thumbnail": "https://3kh0.bitbucket.io/projects/1/meta/apple-touch-icon.png",
+    "category": "Puzzle"
   },
   {
-    "name": "Tetris",
-    "url": "https://tetris.com/play-tetris",
-    "thumbnail": "assets/tetris.png",
-    "category": "Arcade"
+    "name": "2048",
+    "url": "Games/2048/index.html",
+    "thumbnail": "https://play-lh.googleusercontent.com/bZregCeEpzMwRoocLnsYb4Te-vPPHkW1k5H1xsQ3qK9yE00fixpWu5fNsUz3ut2IiDHn",
+    "category": "Puzzle"
   },
   {
-    "name": "Snake",
-    "url": "https://playsnake.org/",
-    "thumbnail": "assets/snake.png",
-    "category": "Arcade"
+    "name": "9007199254740992",
+    "url": "Games/9007199254740992/index.html",
+    "thumbnail": "https://3kh0.bitbucket.io/projects/9007199254740992/logo-4.png",
+    "category": "Puzzle"
+  },
+  {
+    "name": "Achievement Unlocked",
+    "url": "Games/achievementunlocked/index.html",
+    "thumbnail": "https://images.launchbox-app.com/4e7fbd64-1b37-4017-a83b-6a4188b11f99.png",
+    "category": "Adventure"
+  },
+  {
+    "name": "Basketball Stars",
+    "url": "Games/basketball-stars/index.html",
+    "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQka_319CR1UbDqb4vGkioh0yCPy8ur4siRX89-JSWiaw8zd2BzNWdy2uObv68HOq8jFA&usqp=CAU",
+    "category": "Sports"
+  },
+  {
+    "name": "Big Red Button",
+    "url": "Games/bigredbutton/index.html",
+    "thumbnail": "https://pbs.twimg.com/profile_images/1105922638956814336/3qQe4a-Z_400x400.png",
+    "category": "Random"
+  },
+  {
+    "name": "Bloons TD",
+    "url": "Games/bloonstd/index.html",
+    "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRPi07Tp01JCRnD8ZAJ6D-VqxPsHwMmxN1obyeDk2-QBuN6eSvFcy1SIp8RPJF6z5SWkQ&usqp=CAU",
+    "category": "Strategy"
+  },
+  {
+    "name": "Bloons TD 2",
+    "url": "Games/bloonstd2/index.html",
+    "thumbnail": "https://assets-prd.ignimgs.com/2024/04/26/bloonstd2-1714172517746.jpg",
+    "category": "Strategy"
   }
 ]
