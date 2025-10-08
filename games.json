@@ -46,5 +46,35 @@
     "url": "Games/bloonstd2/index.html",
     "thumbnail": "https://assets-prd.ignimgs.com/2024/04/26/bloonstd2-1714172517746.jpg",
     "category": "Strategy"
+  },
+  {
+    "name": "Bloxorz",
+    "url": "Games/bloxors/index.html",
+    "thumbnail": "https://www.coolmathgames.com/sites/default/files/bloxorz-game-icon.png",
+    "category": "Puzzle"
+  },
+  {
+    "name": "Breaking The Bank",
+    "url": "Games/breakingthebank/index.html",
+    "thumbnail": "https://img.poki-cdn.com/cdn-cgi/image/q=78,scq=50,width=314,height=314,fit=cover,f=auto/0f80f3388aabb6153981b749df08c7fc6048d5234a40e9e88d7afc73178b451e/breaking-the-bank.png",
+    "category": "Adventure"
+  },
+  {
+    "name": "Cell Machine",
+    "url": "Games/cell-machine/index.html",
+    "thumbnail": "https://3kh0.bitbucket.io/projects/cell-machine/img/te9nDu.png",
+    "category": "Puzzle"
+  },
+  {
+    "name": "Chrome Dino",
+    "url": "Games/chrome-dino/index.html",
+    "thumbnail": "https://images.seeklogo.com/logo-png/47/1/dinosaur-game-logo-png_seeklogo-473669.png",
+    "category": "Arcade"
+  },
+  {
+    "name": "Csgo Clicker",
+    "url": "Games/csgo-clicker/index.html",
+    "thumbnail": "https://avatars.githubusercontent.com/u/39322951?s=280&v=4",
+    "category": "Clicker"
   }
 ]
