@@ -68,7 +68,7 @@
   {
     "name": "Chrome Dino",
     "url": "Games/chrome-dino/index.html",
-    "thumbnail": "https://images.seeklogo.com/logo-png/47/1/dinosaur-game-logo-png_seeklogo-473669.png",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Chromium_T-Rex-error-offline.svg/2048px-Chromium_T-Rex-error-offline.svg.png",
     "category": "Arcade"
   },
   {
@@ -110,13 +110,13 @@
   {
     "name": "Duck Life 2",
     "url": "Games/ducklife2/index.html",
-    "thumbnail": "https://dinosaur-game.io/data/image/game/duck-life-2%20(2).jpg",
+    "thumbnail": "https://unblocked-games.s3.amazonaws.com/media/posts/540/duck-life-2.webp",
     "category": "Adventure"
   },
   {
     "name": "Duck Life 3",
     "url": "Games/ducklife3/index.html",
-    "thumbnail": "https://img.poki-cdn.com/cdn-cgi/image/q=78,scq=50,width=1200,height=1200,fit=cover,f=png/f5671816-e95b-4d41-adb7-411708f431ba/ducklife-3.png",
+    "thumbnail": "https://unblocked-games.s3.amazonaws.com/media/posts/541/responsive/duck-life-3-evolution-xs.webp",
     "category": "Adventure"
   },
   {
@@ -134,13 +134,13 @@
   {
     "name": "Flappy Bird",
     "url": "Games/flappy-bird/index.html",
-    "thumbnail": "https://static.wikia.nocookie.net/annoyingorange/images/1/19/FlappyBird.png/revision/latest/thumbnail/width/360/height/450?cb=20140725210326",
+    "thumbnail": "https://techfrontier.com.au/nitropack_static/qoEzaUnVVMmdfnkgmWKdqPZHmHyfhDwG/assets/images/optimized/techfrontier.com.au/wp-content/uploads/2025/07/Remembering-Flappy-Bird.jpg",
     "category": "Arcade"
   },
   {
     "name": "Flash Tetris",
     "url": "Games/flashtetris/index.html",
-    "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo2A7Ffm9qCt4d5rN1nKykC1PGNeDjquYPBQ&s",
+    "thumbnail": "https://3kh0.bitbucket.io/projects/flashtetris/flashtetris.png",
     "category": "Arcade"
   },
   {
