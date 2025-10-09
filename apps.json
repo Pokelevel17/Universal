@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Soundboard",
+    "url": "apps/calculator/index.html",
+    "thumbnail": "apps/calculator/thumb.png"
+  },
+  {
+    "name": "Web Retro Local",
+    "url": "apps/notepad/index.html",
+    "thumbnail": "apps/notepad/thumb.png"
+  }
+]
