@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Apps - Universal Arcade</title>
+<style>
+body, html {
+  margin:0; padding:0; font-family:'Segoe UI',sans-serif; color:#fff; 
+  background: linear-gradient(-45deg,#1a1a1a,#222,#1a1a1a,#222); 
+  background-size:400% 400%; animation: gradientBG 15s ease infinite;
+  scroll-behavior: smooth;
+}
+@keyframes gradientBG{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+#particles-canvas{position:fixed; top:0; left:0; width:100%; height:100%; z-index:0;}
+.container{position:relative; z-index:1; max-width:1200px; margin:auto; padding:20px;}
+.controls{display:flex; gap:10px; margin-bottom:15px; justify-content:center; flex-wrap:wrap;}
+input{padding:6px 10px; border-radius:5px; border:none; background:#333; color:#fff;}
+input::placeholder{color:#bbb;}
+#apps-grid{display:flex; flex-wrap:wrap; gap:15px; justify-content:center;}
+.app-card{background:rgba(0,0,0,0.6); width:160px; height:200px; display:flex; flex-direction:column; align-items:center; padding:10px; border-radius:8px; cursor:pointer; transition: transform 0.2s, box-shadow 0.2s;}
+.app-card:hover{transform:scale(1.05); box-shadow:0 6px 15px rgba(0,0,0,0.5);}
+.thumb-container{width:100%; height:120px; overflow:hidden; border-radius:6px;}
+.thumb-container img{width:100%; height:100%; object-fit:cover;}
+h2{font-size:16px; margin:8px 0 0 0; text-align:center;}
+button.back-btn{
+  background:#333; color:#fff; border:none; padding:8px 14px; border-radius:6px;
+  cursor:pointer; transition:background 0.3s, transform 0.2s;
+}
+button.back-btn:hover{
+  background:#555; transform:scale(1.05);
+}
+#topBtn {
+  display:none; position:fixed; bottom:30px; right:30px; z-index:999; 
+  background:#333; color:#fff; border:none; padding:10px 14px; border-radius:50px; cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,0.5); transition: background 0.3s, transform 0.2s;
+}
+#topBtn:hover {background:#555; transform:scale(1.1);}
+</style>
+</head>
+<body>
+
+<canvas id="particles-canvas"></canvas>
+
+<div class="container">
+<h1 style="text-align:center;">All Apps</h1>
+<!-- Back to Home button above search -->
+<div style="text-align:center; margin-bottom:10px;">
+  <button class="back-btn" onclick="window.location.href='index.html'">⬅ Back to Home</button>
+</div>
+<div class="controls">
+  <input type="text" id="search" placeholder="Search apps...">
+</div>
+<div id="apps-grid"></div>
+<p style="text-align:center; font-size:14px; margin-top:20px;">Made by Fusionzzz</p>
+</div>
+
+<!-- Go Back to Top Button -->
+<button id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'});">⬆ Top</button>
+
+<script>
+// ===== Particles =====
+const canvas=document.getElementById('particles-canvas');
+const ctx=canvas.getContext('2d');
+let particlesArray=[]; 
+canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+class Particle{
+  constructor(){this.x=Math.random()*canvas.width; this.y=Math.random()*canvas.height; this.size=Math.random()*3+1; this.speedX=Math.random()*1-0.5; this.speedY=Math.random()*1-0.5;}
+  update(){this.x+=this.speedX; this.y+=this.speedY;
+    if(this.x<0)this.x=canvas.width; if(this.x>canvas.width)this.x=0;
+    if(this.y<0)this.y=canvas.height; if(this.y>canvas.height)this.y=0;}
+  draw(){ctx.fillStyle='rgba(255,255,255,0.7)'; ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill();}
+}
+function initParticles(){particlesArray=[]; for(let i=0;i<100;i++) particlesArray.push(new Particle());}
+function animateParticles(){ctx.clearRect(0,0,canvas.width,canvas.height); particlesArray.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(animateParticles);}
+initParticles(); animateParticles();
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth; canvas.height=window.innerHeight; initParticles();});
+
+// ===== Load apps from apps.json =====
+const APPS_URL='apps.json';
+async function loadApps(){
+  const res=await fetch(APPS_URL);
+  const apps=await res.json();
+  const grid=document.getElementById('apps-grid');
+  const search=document.getElementById('search');
+
+  function render(list){
+    grid.innerHTML='';
+    list.forEach(app=>{
+      const card=document.createElement('div'); 
+      card.className='app-card';
+      card.innerHTML=`<div class="thumb-container"><img src="${app.thumbnail}" alt="${app.name}"></div><h2>${app.name}</h2>`;
+      card.addEventListener('click',()=>{window.location.href=`play.html?url=${encodeURIComponent(app.url)}&name=${encodeURIComponent(app.name)}`;});
+      grid.appendChild(card);
+    });
+  }
+
+  function filterApps(){
+    const term=search.value.toLowerCase();
+    render(apps.filter(a=>a.name.toLowerCase().includes(term)));
+  }
+
+  search.addEventListener('input',filterApps);
+  render(apps);
+}
+loadApps();
+
+// ===== Go Back to Top button =====
+const topBtn=document.getElementById('topBtn');
+window.addEventListener('scroll',()=>{
+  if((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 100)){
+    topBtn.style.display='block';
+  } else {
+    topBtn.style.display='none';
+  }
+});
+</script>
+
+</body>
+</html>
