@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Games - Universal Arcade</title>
+  <title>Universal Arcade - Games</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #111;
-      color: white;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: #0e0e0e;
+      color: #fff;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
@@ -20,21 +20,21 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px;
-      background: #1a1a1a;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      background: #1b1b1b;
+      padding: 15px 25px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
 
     header h1 {
-      font-size: 1.5em;
       margin: 0;
+      font-size: 1.4em;
     }
 
     header button {
       background: #444;
       border: none;
       color: white;
-      padding: 10px 15px;
+      padding: 8px 15px;
       border-radius: 8px;
       cursor: pointer;
       transition: background 0.3s;
@@ -44,21 +44,23 @@
       background: #666;
     }
 
-    .games-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 20px;
-      padding: 20px;
+    main {
       flex: 1;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+      justify-items: center;
     }
 
     .game-card {
-      background: #222;
+      background: #1c1c1c;
       border-radius: 12px;
       overflow: hidden;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      width: 180px;
       cursor: pointer;
       text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .game-card:hover {
@@ -74,40 +76,51 @@
     }
 
     .game-card h3 {
-      margin: 10px;
-      font-size: 1.1em;
+      margin: 10px 0;
+      font-size: 1em;
       color: #fff;
+    }
+
+    #loading {
+      text-align: center;
+      padding: 40px;
+      font-size: 1.2em;
+      color: #aaa;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Universal Arcade</h1>
-    <button onclick="window.location.href='index.html'">⬅ Back</button>
+    <h1>🎮 Universal Arcade</h1>
+    <button onclick="window.location.href='index.html'">⬅ Home</button>
   </header>
 
-  <div class="games-grid" id="games-container">
-    <p>Loading games...</p>
-  </div>
+  <main id="games-container">
+    <div id="loading">Loading games...</div>
+  </main>
 
   <script>
     async function loadGames() {
+      const container = document.getElementById('games-container');
+      const loading = document.getElementById('loading');
+
       try {
-        const response = await fetch('games.json');
-        const games = await response.json();
-        const container = document.getElementById('games-container');
+        const res = await fetch('games.json');
+        const games = await res.json();
         container.innerHTML = '';
+
+        if (!Array.isArray(games) || games.length === 0) {
+          container.innerHTML = '<p>No games found.</p>';
+          return;
+        }
 
         games.forEach(game => {
           const card = document.createElement('div');
           card.className = 'game-card';
-
-          // ✅ Load play.html and pass folder name
           card.onclick = () => {
             window.location.href = `play.html?game=${encodeURIComponent(game.folder)}`;
           };
 
-          // ✅ Use icon directly from games.json
           const img = document.createElement('img');
           img.src = game.icon || 'default.png';
           img.alt = game.name;
@@ -120,9 +133,10 @@
           card.appendChild(title);
           container.appendChild(card);
         });
-      } catch (error) {
-        console.error('Error loading games:', error);
-        document.getElementById('games-container').innerHTML = '<p>Failed to load games.</p>';
+
+      } catch (err) {
+        console.error('Error loading games:', err);
+        container.innerHTML = '<p>Failed to load games. Check console for details.</p>';
       }
     }
 
