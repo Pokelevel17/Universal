@@ -78,6 +78,41 @@
       font-size: 1.1em;
       color: #fff;
     }
+
+    /* Modal overlay for game iframe */
+    .game-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      flex-direction: column;
+    }
+
+    .game-modal iframe {
+      width: 90%;
+      height: 80vh;
+      border: none;
+      border-radius: 12px;
+      background: #000;
+    }
+
+    .close-btn {
+      background: #f44336;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      margin-top: 15px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+
+    .close-btn:hover {
+      background: #d32f2f;
+    }
   </style>
 </head>
 <body>
@@ -88,6 +123,12 @@
 
   <div class="games-grid" id="games-container">
     <p>Loading games...</p>
+  </div>
+
+  <!-- Game modal (iframe) -->
+  <div class="game-modal" id="game-modal">
+    <iframe id="game-frame" src=""></iframe>
+    <button class="close-btn" onclick="closeGame()">Close Game</button>
   </div>
 
   <script>
@@ -102,10 +143,8 @@
           const card = document.createElement('div');
           card.className = 'game-card';
 
-          // Go to play.html with ?game=folderName
-          card.onclick = () => {
-            window.location.href = `play.html?game=${encodeURIComponent(game.folder)}`;
-          };
+          // Load game when clicked (open in iframe modal)
+          card.onclick = () => openGame(game.url);
 
           const img = document.createElement('img');
           img.src = game.icon || `projects/${game.folder}/icon.png`;
@@ -123,6 +162,20 @@
         console.error('Error loading games:', error);
         document.getElementById('games-container').innerHTML = '<p>Failed to load games.</p>';
       }
+    }
+
+    function openGame(url) {
+      const modal = document.getElementById('game-modal');
+      const iframe = document.getElementById('game-frame');
+      iframe.src = url;
+      modal.style.display = 'flex';
+    }
+
+    function closeGame() {
+      const modal = document.getElementById('game-modal');
+      const iframe = document.getElementById('game-frame');
+      iframe.src = '';
+      modal.style.display = 'none';
     }
 
     loadGames();
