@@ -102,13 +102,14 @@
           const card = document.createElement('div');
           card.className = 'game-card';
 
-          // Load game into play.html when clicked
+          // ✅ Load play.html and pass folder name
           card.onclick = () => {
             window.location.href = `play.html?game=${encodeURIComponent(game.folder)}`;
           };
 
+          // ✅ Use icon directly from games.json
           const img = document.createElement('img');
-          img.src = game.icon || `projects/${game.folder}/icon.png`;
+          img.src = game.icon || 'default.png';
           img.alt = game.name;
           img.onerror = () => { img.src = 'default.png'; };
 
