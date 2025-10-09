@@ -3,150 +3,82 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Universal Arcade - Games</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Play Game - Universal Arcade</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background-color: #0e0e0e;
-      color: #fff;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
+      height: 100vh;
+      background: #000;
+      color: white;
     }
 
     header {
+      background: #1a1a1a;
+      padding: 10px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #1b1b1b;
-      padding: 15px 25px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 1.4em;
     }
 
     header button {
       background: #444;
-      border: none;
       color: white;
+      border: none;
       padding: 8px 15px;
-      border-radius: 8px;
+      border-radius: 6px;
       cursor: pointer;
-      transition: background 0.3s;
     }
 
     header button:hover {
       background: #666;
     }
 
-    main {
+    iframe {
       flex: 1;
-      padding: 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 20px;
-      justify-items: center;
-    }
-
-    .game-card {
-      background: #1c1c1c;
-      border-radius: 12px;
-      overflow: hidden;
-      width: 180px;
-      cursor: pointer;
-      text-align: center;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .game-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-    }
-
-    .game-card img {
       width: 100%;
-      height: 150px;
-      object-fit: cover;
-      background: #000;
-    }
-
-    .game-card h3 {
-      margin: 10px 0;
-      font-size: 1em;
-      color: #fff;
-    }
-
-    #loading {
-      text-align: center;
-      padding: 40px;
-      font-size: 1.2em;
-      color: #aaa;
+      border: none;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>🎮 Universal Arcade</h1>
-    <button onclick="window.location.href='index.html'">⬅ Home</button>
+    <h2 id="game-title">Loading...</h2>
+    <button onclick="window.location.href='games.html'">⬅ Back</button>
   </header>
 
-  <main id="games-container">
-    <div id="loading">Loading games...</div>
-  </main>
+  <iframe id="game-frame"></iframe>
 
   <script>
-    async function loadGames() {
-      const container = document.getElementById('games-container');
-      const loading = document.getElementById('loading');
+    async function loadGame() {
+      const params = new URLSearchParams(window.location.search);
+      const folder = params.get('game');
+
+      if (!folder) {
+        document.getElementById('game-title').textContent = 'Game not found';
+        return;
+      }
 
       try {
+        // Load games.json to get the proper name
         const res = await fetch('games.json');
         const games = await res.json();
-        container.innerHTML = '';
+        const game = games.find(g => g.folder === folder);
 
-        if (!Array.isArray(games) || games.length === 0) {
-          container.innerHTML = '<p>No games found.</p>';
-          return;
+        if (!game) {
+          document.getElementById('game-title').textContent = 'Game not found';
+        } else {
+          document.getElementById('game-title').textContent = game.name;
+          document.getElementById('game-frame').src = `projects/${folder}/index.html`;
         }
-
-        games.forEach(game => {
-          // Ignore "category" entirely
-          const { name, folder, icon } = game;
-          if (!name || !folder) return;
-
-          const card = document.createElement('div');
-          card.className = 'game-card';
-
-          // Open play.html with folder name
-          card.onclick = () => {
-            window.location.href = `play.html?game=${encodeURIComponent(folder)}`;
-          };
-
-          const img = document.createElement('img');
-          img.src = icon || 'default.png';
-          img.alt = name;
-          img.onerror = () => { img.src = 'default.png'; };
-
-          const title = document.createElement('h3');
-          title.textContent = name;
-
-          card.appendChild(img);
-          card.appendChild(title);
-          container.appendChild(card);
-        });
-
       } catch (err) {
-        console.error('Error loading games:', err);
-        container.innerHTML = '<p>Failed to load games. Check console for details.</p>';
+        console.error('Error loading game:', err);
+        document.getElementById('game-title').textContent = 'Failed to load game';
       }
     }
 
-    loadGames();
+    loadGame();
   </script>
 </body>
 </html>
