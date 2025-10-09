@@ -38,29 +38,24 @@ iframe {
 </head>
 <body>
 <header>
-  <button onclick="goBack()">Back</button>
+  <button onclick="goBack()">Back to Home</button>
   <button onclick="fullscreenGame()">Fullscreen</button>
 </header>
 
 <iframe id="gameFrame" src=""></iframe>
 
 <script>
-// Get game URL, name, and type from query parameters
+// Get game URL and name from query parameters
 const params = new URLSearchParams(window.location.search);
 const gameUrl = params.get('url');
 const gameName = params.get('name');
-const type = params.get('type') || 'game'; // default to game
 
 document.title = gameName || "Game";
 document.getElementById('gameFrame').src = gameUrl || "";
 
-// Back button goes to correct page based on type
+// Back button always goes to home page
 function goBack() {
-  if(type === 'app'){
-    window.location.href = 'apps.html';
-  } else {
-    window.location.href = 'games.html';
-  }
+  window.location.href = 'index.html';
 }
 
 // Fullscreen button
