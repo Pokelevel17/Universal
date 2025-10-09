@@ -46,7 +46,7 @@
 
     .games-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 20px;
       padding: 20px;
       flex: 1;
@@ -58,6 +58,7 @@
       overflow: hidden;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       cursor: pointer;
+      text-align: center;
     }
 
     .game-card:hover {
@@ -67,14 +68,15 @@
 
     .game-card img {
       width: 100%;
-      height: 140px;
+      height: 150px;
       object-fit: cover;
+      background: #000;
     }
 
     .game-card h3 {
       margin: 10px;
       font-size: 1.1em;
-      text-align: center;
+      color: #fff;
     }
   </style>
 </head>
@@ -89,7 +91,6 @@
   </div>
 
   <script>
-    // Fetch games list dynamically
     async function loadGames() {
       try {
         const response = await fetch('games.json');
@@ -100,11 +101,16 @@
         games.forEach(game => {
           const card = document.createElement('div');
           card.className = 'game-card';
-          card.onclick = () => window.location.href = `play.html?game=${encodeURIComponent(game.name)}`;
+
+          // Go to play.html with ?game=folderName
+          card.onclick = () => {
+            window.location.href = `play.html?game=${encodeURIComponent(game.folder)}`;
+          };
 
           const img = document.createElement('img');
-          img.src = game.image || 'default.png';
+          img.src = game.icon || `projects/${game.folder}/icon.png`;
           img.alt = game.name;
+          img.onerror = () => { img.src = 'default.png'; };
 
           const title = document.createElement('h3');
           title.textContent = game.name;
