@@ -44,7 +44,6 @@ button.back-btn:hover{
 
 <div class="container">
 <h1 style="text-align:center;">All Apps</h1>
-<!-- Back to Home button above search -->
 <div style="text-align:center; margin-bottom:10px;">
   <button class="back-btn" onclick="window.location.href='index.html'">⬅ Back to Home</button>
 </div>
@@ -55,7 +54,6 @@ button.back-btn:hover{
 <p style="text-align:center; font-size:14px; margin-top:20px;">Made by Fusionzzz</p>
 </div>
 
-<!-- Go Back to Top Button -->
 <button id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'});">⬆ Top</button>
 
 <script>
@@ -90,7 +88,9 @@ async function loadApps(){
       const card=document.createElement('div'); 
       card.className='app-card';
       card.innerHTML=`<div class="thumb-container"><img src="${app.thumbnail}" alt="${app.name}"></div><h2>${app.name}</h2>`;
-      card.addEventListener('click',()=>{window.location.href=`play.html?url=${encodeURIComponent(app.url)}&name=${encodeURIComponent(app.name)}`;});
+      card.addEventListener('click',()=> {
+        window.location.href=`play.html?url=${encodeURIComponent(app.url)}&name=${encodeURIComponent(app.name)}&type=app`;
+      });
       grid.appendChild(card);
     });
   }
