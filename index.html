@@ -70,6 +70,15 @@ body {
   font-size: 18px;
 }
 
+/* Buttons container */
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
 .home-container a.start-btn {
   display: inline-block;
   padding: 15px 30px;
@@ -103,14 +112,17 @@ body {
 
   <!-- Website Description -->
   <p class="description">
-    Enjoy a huge collection of games that are fully unblocked and accessible anywhere! Play instantly in your browser without restrictions and have fun with friends or solo.
+    Enjoy a huge collection of games and apps that are fully unblocked and accessible anywhere! Play instantly in your browser without restrictions and have fun.
   </p>
 
   <!-- Random Quote -->
   <p class="quote" id="random-quote"></p>
 
-  <!-- Start Playing Button -->
-  <a class="start-btn" id="start-btn">Start Playing</a>
+  <!-- Buttons: Games & Apps -->
+  <div class="button-group">
+    <a class="start-btn" id="games-btn">🎮 Games</a>
+    <a class="start-btn" id="apps-btn">📱 Apps</a>
+  </div>
 
   <!-- Made By Credit -->
   <p class="credit">Made By Fusionzzz</p>
@@ -130,9 +142,12 @@ const quotes = [
 const quoteElement = document.getElementById('random-quote');
 quoteElement.textContent = quotes[Math.floor(Math.random() * quotes.length)];
 
-// Redirect Start Button to games.html
-document.getElementById('start-btn').addEventListener('click', () => {
+// Redirect buttons
+document.getElementById('games-btn').addEventListener('click', () => {
   window.location.href = 'games.html';
+});
+document.getElementById('apps-btn').addEventListener('click', () => {
+  window.location.href = 'apps.html';
 });
 
 // Particle Animation
@@ -154,6 +169,7 @@ class Particle {
   }
   update() {
     this.x += this.speedX;
+
     this.y += this.speedY;
 
     // Wrap around edges
