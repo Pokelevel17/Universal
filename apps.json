@@ -1,12 +1,12 @@
 [
   {
     "name": "Soundboard",
-    "url": "apps/calculator/index.html",
-    "thumbnail": "apps/calculator/thumb.png"
+    "url": "Apps/soundboard/index.html",
+    "thumbnail": "https://images.eshop-prices.com/games/9396/480w.jpeg"
   },
   {
     "name": "Web Retro Local",
-    "url": "apps/notepad/index.html",
-    "thumbnail": "apps/notepad/thumb.png"
+    "url": "Apps/webretro-local/index.html",
+    "thumbnail": "https://blog.lon.tv/wp-content/uploads/2023/01/retroarch.png"
   }
 ]
