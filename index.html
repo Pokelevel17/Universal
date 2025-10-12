@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Hub | Unblocked Games Portal</title>
+    <title>Universal Arcade</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -75,7 +75,7 @@
             <!-- Logo / Title -->
             <div class="flex items-center space-x-2">
                 <i data-lucide="zap" class="w-6 h-6 text-cyan-400"></i>
-                <span class="text-2xl font-extrabold text-white">Quantum<span class="text-cyan-400">Hub</span></span>
+                <span class="text-2xl font-extrabold text-white">Universal<span class="text-cyan-400">Arcade</span></span>
             </div>
 
             <!-- Game Suggestions Link -->
@@ -97,8 +97,8 @@
             <!-- Search Bar and Greeting -->
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 p-6 bg-gray-800 rounded-xl shadow-lg border border-gray-700">
                 <div>
-                    <h1 class="text-3xl font-bold text-white mb-1">Welcome Back.</h1>
-                    <p class="text-gray-400">Dive into thousands of unblocked titles instantly.</p>
+                    <h1 class="text-3xl font-bold text-white mb-1">Welcome To Universal Arcade!</h1>
+                    <p class="text-gray-400">One of the best unblocked game websites with a ton of games and gets updated weekly!</p>
                 </div>
         
                 <div class="relative w-full md:w-80 mt-4 md:mt-0">
@@ -111,11 +111,10 @@
             <div class="mb-8 border-b border-gray-700">
                 <div class="flex space-x-2 overflow-x-auto pb-2">
                     <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="All">All Games</button>
-                    <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50 active-tab" data-category="Featured">Featured</button>
-                    <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Arcade">Arcade</button>
-                    <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Racing">Racing</button>
-                    <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Puzzle">Puzzle</button>
-                    <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Strategy">Strategy</button>
+                    <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50 active-tab" data-category="HTML5">HTML5</button>
+                    <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Emulator">Emulator</button>
+                    <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Ruffle">Ruffle</button>
+                    <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Scratch">Scratch</button>
                 </div>
             </div>
         
@@ -127,7 +126,7 @@
             <!-- No Results Message -->
             <div id="no-results" class="text-center py-20 hidden">
                 <i data-lucide="frown" class="w-12 h-12 text-gray-500 mx-auto mb-4"></i>
-                <p class="text-xl text-gray-400">No games found matching your criteria. Try another search or category!</p>
+                <p class="text-xl text-gray-400">No games found... Try searching something else!</p>
             </div>
         </div>
 
@@ -163,7 +162,7 @@
 
     <!-- Footer -->
     <footer class="mt-20 py-6 text-center text-gray-500 border-t border-gray-800">
-        <p>&copy; 2025 Quantum Hub. Made with <span class="text-red-500">♥</span> | Powered by Fusionzzz</p>
+        <p>&copy; 2025 Universal Arcade. Made by Fusionzzz</p>
     </footer>
 
     <!-- --- AI ASSISTANT CHAT WIDGET --- -->
@@ -175,7 +174,7 @@
         <div class="bg-gray-900 p-3 flex items-center justify-between border-b border-cyan-700">
             <div class="flex items-center space-x-2">
                 <i data-lucide="bot" class="w-5 h-5 text-cyan-400"></i>
-                <span class="font-semibold text-white">Quantum Assistant (Grounded AI)</span>
+                <span class="font-semibold text-white">Universal AI</span>
             </div>
             <button onclick="toggleChat()" class="text-gray-400 hover:text-white">
                 <i data-lucide="minus" class="w-4 h-4"></i>
@@ -185,7 +184,7 @@
         <div id="chat-messages" class="chat-messages flex-grow p-3 space-y-3">
             <div class="flex justify-start">
                 <div class="bg-cyan-800/50 text-white p-2 rounded-xl max-w-[80%] rounded-tl-none text-sm">
-                    Hello! I'm your **Grounded AI Assistant**. I can now answer complex questions by searching the web for up-to-date information.
+                    Hello! Im Universal Arcades AI Bot Where You Can Ask Anything And I Have A Answer!
                 </div>
             </div>
         </div>
@@ -238,29 +237,20 @@
     const chatInput = document.getElementById('chat-input');
     const sendBtn = document.getElementById('send-btn');
     
-    // --- Mock Game Data (Used to prevent 'games.json' fetch errors) ---
-    const MOCK_GAMES = [
-        { title: "Retro Breakout", url: "https://example.com/breakout", category: "Arcade", icon: "square" },
-        { title: "Speed Racer 3D", url: "https://example.com/racer", category: "Racing", icon: "car" },
-        { title: "Chess Master", url: "https://example.com/chess", category: "Strategy", icon: "shield" },
-        { title: "Falling Tetris", url: "https://example.com/tetris", category: "Puzzle", icon: "blocks" },
-        { title: "Featured Star", url: "https://example.com/featured", category: "Featured", icon: "star" },
-        { title: "Another Featured", url: "https://example.com/featured2", category: "Featured", icon: "zap" },
-        { title: "Platform Jumper", url: "https://example.com/platform", category: "Arcade", icon: "mountain" },
-        { title: "Space Shooter", url: "https://example.com/shooter", category: "Arcade", icon: "rocket" },
-        { title: "Highway Drift", url: "https://example.com/drift", category: "Racing", icon: "gauge" },
-    ];
-
-
-    // --- Game Data Loading Logic ---
-
-    // Note: Replaced fetch('games.json') with MOCK_GAMES to prevent fetch errors 
-    // when running in environments that don't allow external file loading.
-    function loadGames() {
-        allGames = MOCK_GAMES;
-        console.log('Loaded mock game data.');
-        renderGames(currentCategory);
-    }
+    // --- Load games from games.json ---
+function loadGames() {
+    fetch('games.json')
+        .then(res => res.json())
+        .then(data => {
+            allGames = data;
+            renderGames(currentCategory);
+        })
+        .catch(err => {
+            console.error('Failed to load games.json, using empty array.', err);
+            allGames = [];
+            renderGames(currentCategory);
+        });
+}
 
     // --- Game Play Functions (Simulating play.html) ---
 
@@ -499,7 +489,7 @@
              return;
         }
 
-        const systemPrompt = "You are a friendly, concise, and highly knowledgeable AI assistant for an unblocked games portal called Quantum Hub. Your goal is to answer questions clearly and accurately using the provided search results when necessary.";
+        const systemPrompt = "You are a friendly, concise, and highly knowledgeable AI assistant for an unblocked games portal called Universal Arcade. Your goal is to answer questions clearly and accurately using the provided search results when necessary.";
 
         const payload = {
             contents: [{ parts: [{ text: userQuery }] }],
