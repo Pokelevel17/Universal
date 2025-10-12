@@ -14,5 +14,5 @@
     { "id": 13, "title": "Master Chess", "category": "Strategy", "icon": "crown", "url": "https://www.google.com/search?igu=1&q=chess" },
     { "id": 14, "title": "Word Scramble", "category": "Puzzle", "icon": "puzzle", "url": "https://www.google.com/search?igu=1&q=word+puzzle" },
     { "id": 15, "title": "Galaxy Patrol", "category": "Arcade", "icon": "satellite", "url": "https://www.google.com/search?igu=1&q=space+shooter" },
-    { "id": 16, "title": "Truck Simulator", "category": "Racing", "icon": "truck", "url": "https://www.google.com/search?igu=1&q=truck+simulator" }
+    { "id": 16, "title": "Truck Simulator", "category": "Racing", "icon": "", "url": "https://www.google.com/search?igu=1&q=truck+simulator" }
 ]
