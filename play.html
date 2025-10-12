@@ -1,70 +1,131 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Play Game</title>
-<style>
-body, html {
-  margin:0; padding:0; height:100%; display:flex; flex-direction:column; font-family:'Segoe UI', sans-serif; background:#111; color:#fff;
-}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Universal | Play</title>
 
-/* Header with buttons */
-header {
-  display:flex; justify-content:flex-end; gap:10px; padding:10px; background:#222;
-}
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
 
-/* Buttons styling */
-header button {
-  padding:8px 16px;
-  font-size:14px;
-  border:none;
-  border-radius:5px;
-  background:#0078d7;
-  color:#fff;
-  cursor:pointer;
-  transition:0.2s;
-  min-width:120px;  /* same width for both */
-}
-header button:hover {
-  background:#005fa3;
-}
-
-/* Game iframe */
-iframe {
-  flex:1; width:100%; border:none;
-}
-</style>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+    body{font-family:'Inter',sans-serif;background:#0F172A;color:#E2E8F0}
+    iframe { border: none; width:100%; height: calc(100vh - 180px); }
+    .btn { padding:.5rem .9rem; border-radius:.5rem; }
+  </style>
 </head>
-<body>
-<header>
-  <button onclick="goBack()">Back to Home</button>
-  <button onclick="fullscreenGame()">Fullscreen</button>
-</header>
+<body class="antialiased">
 
-<iframe id="gameFrame" src=""></iframe>
+  <header class="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-sm shadow-xl border-b border-gray-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-3">
+          <i data-lucide="zap" class="w-5 h-5 text-cyan-400"></i>
+          <span class="text-white font-semibold">Universal</span>
+        </a>
+      </div>
+      <div class="flex items-center gap-3">
+        <a id="open-in-new" class="text-gray-300 text-sm hover:text-cyan-400" href="#" target="_blank">Open in new tab</a>
+        <a href="games.html" class="px-3 py-2 bg-gray-800 rounded-lg border border-gray-700 text-gray-300 hover:border-cyan-500">Back to games</a>
+      </div>
+    </div>
+  </header>
 
-<script>
-// Get game URL and name from query parameters
-const params = new URLSearchParams(window.location.search);
-const gameUrl = params.get('url');
-const gameName = params.get('name');
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div id="meta" class="mb-4 p-4 bg-gray-800 rounded-xl border border-gray-700 flex items-center justify-between">
+      <div>
+        <h1 id="game-title" class="text-lg font-semibold text-white">Loading…</h1>
+        <p id="game-cat" class="text-sm text-gray-400 mt-1"></p>
+      </div>
+      <div class="flex items-center gap-3">
+        <button id="toggle-fit" class="btn bg-gray-700 border border-gray-600 text-white">Toggle Fit</button>
+        <a id="download-link" class="btn bg-cyan-500 text-white hidden" href="#" download>Download</a>
+      </div>
+    </div>
 
-document.title = gameName || "Game";
-document.getElementById('gameFrame').src = gameUrl || "";
+    <div id="player-wrapper" class="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
+      <iframe id="game-frame" srcdoc="<p class='text-white p-6'>Loading game...</p>"></iframe>
+    </div>
 
-// Back button always goes to home page
-function goBack() {
-  window.location.href = 'index.html';
-}
+    <div id="no-game" class="mt-6 text-center text-gray-400 hidden">
+      <p>Game not found. <a href="games.html" class="text-cyan-400 underline">Browse games</a></p>
+    </div>
+  </main>
 
-// Fullscreen button
-function fullscreenGame(){
-  const iframe = document.getElementById('gameFrame');
-  if (iframe.requestFullscreen) iframe.requestFullscreen();
-  else if (iframe.webkitRequestFullscreen) iframe.webkitRequestFullscreen();
-  else if (iframe.msRequestFullscreen) iframe.msRequestFullscreen();
-}
-</script>
+  <footer class="mt-8 py-6 text-center text-gray-500 border-t border-gray-800">
+    <p>&copy; <span id="year"></span> Universal</p>
+  </footer>
+
+  <script>
+    let games = [];
+    const params = new URLSearchParams(location.search);
+    const id = params.get('id');
+    const frame = document.getElementById('game-frame');
+    const titleEl = document.getElementById('game-title');
+    const catEl = document.getElementById('game-cat');
+    const openNew = document.getElementById('open-in-new');
+    const downloadLink = document.getElementById('download-link');
+    const noGame = document.getElementById('no-game');
+
+    function loadGameFromData(game){
+      if(!game){ titleEl.textContent = 'Game not found'; noGame.classList.remove('hidden'); return; }
+      document.title = `Universal | ${game.title}`;
+      titleEl.textContent = game.title;
+      catEl.textContent = game.category || '';
+      openNew.href = game.url || '#';
+      openNew.target = '_blank';
+
+      // If game.url looks like an iframe embeddable url, set src; else if it's HTML content set srcdoc
+      if(game.embedHtml){
+        frame.srcdoc = game.embedHtml;
+      } else if(game.url && (game.url.startsWith('http') || game.url.startsWith('/') ) ){
+        // Use a lightweight iframe sandbox — allow-scripts so many HTML5 games work
+        frame.src = game.url;
+      } else {
+        frame.srcdoc = `<div style="padding:24px;color:#e2e8f0;background:#0f172a">Cannot preview this game.</div>`;
+      }
+
+      // show download if direct file available
+      if(game.download){
+        downloadLink.href = game.download;
+        downloadLink.classList.remove('hidden');
+      } else {
+        downloadLink.classList.add('hidden');
+      }
+
+      noGame.classList.add('hidden');
+    }
+
+    // toggle fit (cover/contain) behavior
+    document.getElementById('toggle-fit').addEventListener('click', ()=>{
+      const cur = frame.style.objectFit || 'fill';
+      frame.style.objectFit = cur === 'contain' ? 'cover' : 'contain';
+    });
+
+    // fetch games.json
+    fetch('/games.json').then(r => r.ok ? r.json() : Promise.reject()).then(data=>{
+      games = Array.isArray(data) ? data : (data.games || []);
+      let game = null;
+      if(id){
+        game = games.find(g => String(g.id) === String(id) || String(g.slug) === String(id));
+      } else {
+        // if no id, attempt to find search param 'url'
+        const urlParam = params.get('url');
+        if(urlParam) game = { title: 'External Game', url: urlParam };
+      }
+      loadGameFromData(game);
+    }).catch(()=> {
+      // fallback if no games.json
+      if(id == 1) loadGameFromData({id:1,title:'Demo Shooter',category:'Arcade',url:'/demo/shooter/index.html'});
+      else loadGameFromData(null);
+    });
+
+    // UI init
+    document.addEventListener('DOMContentLoaded', ()=> {
+      lucide.createIcons();
+      document.getElementById('year').textContent = new Date().getFullYear();
+    });
+  </script>
 </body>
 </html>
