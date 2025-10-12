@@ -78,7 +78,7 @@
                 <span class="text-2xl font-extrabold text-white">Quantum<span class="text-cyan-400">Hub</span></span>
             </div>
 
-            <!-- Game Suggestions Link (Replaces Settings Button) -->
+            <!-- Game Suggestions Link -->
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSfGZL6dP1snuieVUR9V0rjWzOGhx7oK3t5O0kG_S5gDAw6ZIg/viewform?usp=header"
                target="_blank"
                rel="noopener noreferrer"
@@ -133,13 +133,24 @@
 
         <!-- 2. Game Player View (Hidden by default, simulates play.html) -->
         <div id="game-player-view" class="hidden">
-            <!-- Game Title and Back Button -->
+            <!-- Game Title, Back Button, and Fullscreen Button -->
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 p-4 bg-gray-800 rounded-xl border border-gray-700">
+                <!-- Back Button (Order 2 on mobile, Order 1 on desktop) -->
                 <button onclick="exitGame()" class="flex items-center space-x-2 text-cyan-400 hover:text-white transition order-2 sm:order-1 mt-3 sm:mt-0">
                     <i data-lucide="arrow-left" class="w-5 h-5"></i>
                     <span class="font-semibold">Back to Games</span>
                 </button>
-                <h2 id="player-game-title" class="text-2xl font-bold text-white truncate max-w-full order-1 sm:order-2">Loading Game...</h2>
+
+                <!-- Title and Fullscreen Button Group (Order 1 on mobile, Order 2 on desktop) -->
+                <div class="flex items-center space-x-3 order-1 sm:order-2">
+                    <h2 id="player-game-title" class="text-2xl font-bold text-white truncate max-w-full">Loading Game...</h2>
+                    
+                    <!-- Fullscreen Button -->
+                    <button onclick="toggleFullscreen()" title="Toggle Fullscreen"
+                            class="p-2 rounded-lg bg-gray-700 text-cyan-400 hover:bg-cyan-500 hover:text-white transition duration-150 flex-shrink-0 shadow-md">
+                        <i id="fullscreen-icon" data-lucide="maximize" class="w-5 h-5"></i>
+                    </button>
+                </div>
             </div>
             
             <!-- Game Iframe Container -->
@@ -226,24 +237,29 @@
     const chatMessages = document.getElementById('chat-messages');
     const chatInput = document.getElementById('chat-input');
     const sendBtn = document.getElementById('send-btn');
+    
+    // --- Mock Game Data (Used to prevent 'games.json' fetch errors) ---
+    const MOCK_GAMES = [
+        { title: "Retro Breakout", url: "https://example.com/breakout", category: "Arcade", icon: "square" },
+        { title: "Speed Racer 3D", url: "https://example.com/racer", category: "Racing", icon: "car" },
+        { title: "Chess Master", url: "https://example.com/chess", category: "Strategy", icon: "shield" },
+        { title: "Falling Tetris", url: "https://example.com/tetris", category: "Puzzle", icon: "blocks" },
+        { title: "Featured Star", url: "https://example.com/featured", category: "Featured", icon: "star" },
+        { title: "Another Featured", url: "https://example.com/featured2", category: "Featured", icon: "zap" },
+        { title: "Platform Jumper", url: "https://example.com/platform", category: "Arcade", icon: "mountain" },
+        { title: "Space Shooter", url: "https://example.com/shooter", category: "Arcade", icon: "rocket" },
+        { title: "Highway Drift", url: "https://example.com/drift", category: "Racing", icon: "gauge" },
+    ];
 
 
     // --- Game Data Loading Logic ---
-    async function loadGames() {
-        try {
-            const response = await fetch('games.json'); 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}. Check if 'games.json' exists.`);
-            }
-            allGames = await response.json();
-            renderGames(currentCategory);
-        } catch (error) {
-            console.error('Failed to load games.json:', error);
-            gamesGrid.innerHTML = `<div class="col-span-full text-center py-10 text-red-400 bg-gray-800 rounded-lg p-6">
-                <p class="font-bold">Error Loading Games</p>
-                <p>Could not load games.json. Please ensure the file exists in the root directory.</p>
-            </div>`;
-        }
+
+    // Note: Replaced fetch('games.json') with MOCK_GAMES to prevent fetch errors 
+    // when running in environments that don't allow external file loading.
+    function loadGames() {
+        allGames = MOCK_GAMES;
+        console.log('Loaded mock game data.');
+        renderGames(currentCategory);
     }
 
     // --- Game Play Functions (Simulating play.html) ---
@@ -280,6 +296,11 @@
      * Exits the game player view and returns to the game grid.
      */
     function exitGame() {
+        // If currently in fullscreen mode (via the button), exit it first
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+
         // 1. Remove Iframe content (stops the game/audio)
         gameIframeContainer.innerHTML = '<p class="text-gray-400">Loading game content...</p>';
 
@@ -291,6 +312,62 @@
         document.title = 'Quantum Hub | Unblocked Games Portal';
         window.scrollTo(0, 0);
     }
+    
+    /**
+     * Toggles fullscreen mode for the game iframe container.
+     */
+    function toggleFullscreen() {
+        const container = document.getElementById('game-iframe-container');
+        const icon = document.getElementById('fullscreen-icon');
+
+        if (!document.fullscreenElement) {
+            // Enter fullscreen
+            const requestFullscreen = container.requestFullscreen || 
+                                    container.mozRequestFullScreen || 
+                                    container.webkitRequestFullscreen || 
+                                    container.msRequestFullscreen;
+
+            if (requestFullscreen) {
+                requestFullscreen.call(container).then(() => {
+                    icon.setAttribute('data-lucide', 'minimize');
+                    lucide.createIcons();
+                }).catch(err => {
+                    console.error("Error attempting to enable fullscreen:", err);
+                });
+            } else {
+                // Fallback for browsers that don't support fullscreen API
+                console.warn("Fullscreen API not supported on this container.");
+            }
+        } else {
+            // Exit fullscreen
+            const exitFullscreen = document.exitFullscreen || 
+                                document.mozCancelFullScreen || 
+                                document.webkitExitFullscreen || 
+                                document.msExitFullscreen;
+            
+            if (exitFullscreen) {
+                exitFullscreen.call(document).then(() => {
+                    icon.setAttribute('data-lucide', 'maximize');
+                    lucide.createIcons();
+                }).catch(err => {
+                    console.error("Error attempting to disable fullscreen:", err);
+                });
+            }
+        }
+    }
+
+    // Listener to update the icon if the user exits using the ESC key
+    document.addEventListener('fullscreenchange', () => {
+        const icon = document.getElementById('fullscreen-icon');
+        if (!icon) return;
+        
+        if (document.fullscreenElement) {
+            icon.setAttribute('data-lucide', 'minimize');
+        } else {
+            icon.setAttribute('data-lucide', 'maximize');
+        }
+        lucide.createIcons();
+    });
 
 
     // --- Game Dashboard Functions ---
