@@ -1,27 +1,18 @@
 [
-  {
-    "title": "Space Shooter",
-    "category": "Arcade",
-    "icon": "rocket",
-    "url": "games/spaceshooter/index.html",
-    "image": "https://placehold.co/400x225?text=Space+Shooter"
-  },
-  {
-    "title": "Drift King Pro",
-    "category": "Racing",
-    "icon": "car",
-    "url": "games/driftking/index.html"
-  },
-  {
-    "title": "Tower Defense X",
-    "category": "Strategy",
-    "icon": "shield",
-    "url": "games/towerdefense/index.html"
-  },
-  {
-    "title": "Featured Game",
-    "category": "Featured",
-    "icon": "star",
-    "url": "games/featured/index.html"
-  }
+    { "id": 1, "title": "Space Shooter", "category": "Arcade", "icon": "rocket", "url": "https://www.google.com/search?igu=1&q=shooter+game" },
+    { "id": 2, "title": "Drift King Pro", "category": "Racing", "icon": "car", "url": "https://www.google.com/search?igu=1&q=car+game" },
+    { "id": 3, "title": "Block Mania", "category": "Puzzle", "icon": "boxes", "url": "https://www.google.com/search?igu=1&q=tetris" },
+    { "id": 4, "title": "Star Commander", "category": "Strategy", "icon": "orbit", "url": "https://www.google.com/search?igu=1&q=strategy+game" },
+    { "id": 5, "title": "Pinball Deluxe", "category": "Arcade", "icon": "toy-brick", "url": "https://www.google.com/search?igu=1&q=pinball" },
+    { "id": 6, "title": "Road Rage 3D", "category": "Racing", "icon": "gauge", "url": "https://www.google.com/search?igu=1&q=racing" },
+    { "id": 7, "title": "Maze Runner", "category": "Puzzle", "icon": "route", "url": "https://www.google.com/search?igu=1&q=maze" },
+    { "id": 8, "title": "Tower Defense X", "category": "Strategy", "icon": "shield", "url": "https://www.google.com/search?igu=1&q=tower+defense" },
+    { "id": 9, "title": "Featured Game 1", "category": "Featured", "icon": "star", "url": "https://www.google.com/search?igu=1&q=popular+game" },
+    { "id": 10, "title": "Featured Game 2", "category": "Featured", "icon": "star", "url": "https://www.google.com/search?igu=1&q=trending+game" },
+    { "id": 11, "title": "Neon Racer", "category": "Racing", "icon": "lightbulb-off", "url": "https://www.google.com/search?igu=1&q=neon+racer" },
+    { "id": 12, "title": "Pixel Jump", "category": "Arcade", "icon": "move-horizontal", "url": "https://www.google.com/search?igu=1&q=platformer" },
+    { "id": 13, "title": "Master Chess", "category": "Strategy", "icon": "crown", "url": "https://www.google.com/search?igu=1&q=chess" },
+    { "id": 14, "title": "Word Scramble", "category": "Puzzle", "icon": "puzzle", "url": "https://www.google.com/search?igu=1&q=word+puzzle" },
+    { "id": 15, "title": "Galaxy Patrol", "category": "Arcade", "icon": "satellite", "url": "https://www.google.com/search?igu=1&q=space+shooter" },
+    { "id": 16, "title": "Truck Simulator", "category": "Racing", "icon": "truck", "url": "https://www.google.com/search?igu=1&q=truck+simulator" }
 ]
