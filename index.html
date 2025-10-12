@@ -1,137 +1,209 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Universal | Home</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Universal | Games & Apps Hub</title>
 
-  <!-- Tailwind CDN -->
+  <!-- TailwindCSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Lucide icons -->
+  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-    body { font-family: 'Inter', sans-serif; background:#0F172A; color:#E2E8F0; }
-    ::-webkit-scrollbar{ width:8px } ::-webkit-scrollbar-thumb{ background:#334155;border-radius:10px }
-    .active-tab{ background:#0E7490;color:#fff;border-bottom:3px solid #06B6D4 }
-    .game-card{ transition:transform .18s ease, box-shadow .18s ease }
-    .game-card:hover{ transform: translateY(-4px); box-shadow:0 15px 25px rgba(6,182,212,0.12); border-color:#06B6D4 }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0F172A;
+      color: #E2E8F0;
+      min-height: 100vh;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+
+    .game-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .game-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 25px rgba(6, 182, 212, 0.2);
+      border-color: #06B6D4;
+    }
+
+    .tab-button {
+      transition: all 0.3s ease;
+    }
+
+    .active-tab {
+      background-color: #0E7490;
+      color: white;
+      border-bottom: 3px solid #06B6D4;
+    }
   </style>
 </head>
+
 <body class="antialiased">
 
   <!-- Header -->
   <header class="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-sm shadow-xl border-b border-gray-700">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-      <div class="flex items-center space-x-3">
+      <div class="flex items-center space-x-2">
         <i data-lucide="zap" class="w-6 h-6 text-cyan-400"></i>
-        <a href="/" class="text-2xl font-extrabold text-white">Universal <span class="text-cyan-400">Arcade</span></a>
+        <span class="text-2xl font-extrabold text-white">Universal<span class="text-cyan-400">Hub</span></span>
       </div>
       <nav class="hidden sm:flex space-x-6">
-        <a href="index.html" class="text-gray-300 hover:text-cyan-400 transition duration-150 font-medium">Home</a>
-        <a href="games.html" class="text-gray-300 hover:text-cyan-400 transition duration-150 font-medium">Games</a>
-        <a href="play.html" class="text-gray-300 hover:text-cyan-400 transition duration-150 font-medium">Play</a>
-        <a href="#" class="text-gray-300 hover:text-cyan-400 transition duration-150 font-medium">About</a>
+        <a href="#games" class="text-gray-300 hover:text-cyan-400 font-medium">Games</a>
+        <a href="#apps" class="text-gray-300 hover:text-cyan-400 font-medium">Apps</a>
+        <a href="#about" class="text-gray-300 hover:text-cyan-400 font-medium">About</a>
       </nav>
-      <div class="flex items-center space-x-3">
-        <a href="games.html" class="px-4 py-2 rounded-lg bg-cyan-500 text-white font-semibold hover:opacity-90">Browse Games</a>
-        <button class="sm:hidden text-gray-300 hover:text-cyan-400">
-          <i data-lucide="menu" class="w-6 h-6"></i>
-        </button>
-      </div>
+      <button class="sm:hidden text-gray-300 hover:text-cyan-400">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
     </div>
   </header>
 
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="grid md:grid-cols-2 gap-8 items-center">
+  <!-- Main -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Search -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 p-6 bg-gray-800 rounded-xl shadow-lg border border-gray-700">
       <div>
-        <h1 class="text-4xl font-extrabold text-white mb-3">Universal — Play anything, anywhere.</h1>
-        <p class="text-gray-400 mb-6">Unblocked games collected in one place. Fast, responsive, and easy to use.</p>
-        <div class="flex gap-3">
-          <a href="games.html" class="px-5 py-3 bg-cyan-500 rounded-lg text-white font-semibold hover:opacity-95">Browse Games</a>
-          <a href="#how" class="px-5 py-3 border border-gray-700 rounded-lg text-gray-300 hover:text-white">How it works</a>
-        </div>
+        <h1 class="text-3xl font-bold text-white mb-1">Welcome to Universal Hub</h1>
+        <p class="text-gray-400">Unblocked Games & Apps in one place.</p>
       </div>
 
-      <div class="p-6 bg-gray-800 rounded-xl border border-gray-700 shadow-lg">
-        <label class="text-xs text-gray-400">Search the collection</label>
-        <div class="relative mt-2">
-          <input id="hero-search" class="w-full bg-gray-700 border border-gray-600 rounded-lg pl-10 pr-4 py-3 text-white placeholder-gray-400 focus:ring-cyan-500 focus:border-cyan-500" placeholder="Search games..." />
-          <i data-lucide="search" class="absolute left-3 top-3 text-gray-400 w-5 h-5"></i>
-        </div>
-        <div class="mt-4 text-sm text-gray-400">Try: <span class="text-gray-200">arcade</span>, <span class="text-gray-200">puzzle</span>, <span class="text-gray-200">racing</span></div>
+      <div class="relative w-full md:w-80 mt-4 md:mt-0">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search for games or apps..."
+          class="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 text-white placeholder-gray-400"
+          onkeyup="filterItems()"
+        />
+        <i data-lucide="search" class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2"></i>
       </div>
     </div>
 
-    <!-- Featured strip -->
-    <section class="mt-10">
-      <h2 class="text-xl font-semibold text-white mb-4">Featured Games</h2>
-      <div id="featured-strip" class="flex gap-4 overflow-x-auto pb-3"></div>
+    <!-- Tabs -->
+    <div class="mb-8 border-b border-gray-700">
+      <div class="flex space-x-2 overflow-x-auto pb-2">
+        <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50 active-tab" data-tab="games">Games</button>
+        <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-tab="apps">Apps</button>
+      </div>
+    </div>
+
+    <!-- Games Section -->
+    <section id="games-section">
+      <h2 class="text-2xl font-bold text-cyan-400 mb-4">Games</h2>
+      <div id="games-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-6"></div>
     </section>
 
-    <!-- How it works -->
-    <section id="how" class="mt-10 grid md:grid-cols-3 gap-6">
-      <div class="p-6 bg-gray-800 rounded-xl border border-gray-700">
-        <i data-lucide="cloud" class="w-6 h-6 text-cyan-400 mb-3"></i>
-        <h3 class="font-semibold text-white">No install</h3>
-        <p class="text-gray-400 text-sm mt-2">Play in your browser instantly — no downloads required.</p>
-      </div>
-      <div class="p-6 bg-gray-800 rounded-xl border border-gray-700">
-        <i data-lucide="zap" class="w-6 h-6 text-cyan-400 mb-3"></i>
-        <h3 class="font-semibold text-white">Fast & responsive</h3>
-        <p class="text-gray-400 text-sm mt-2">Minimal UI with a focus on performance and accessibility.</p>
-      </div>
-      <div class="p-6 bg-gray-800 rounded-xl border border-gray-700">
-        <i data-lucide="folder" class="w-6 h-6 text-cyan-400 mb-3"></i>
-        <h3 class="font-semibold text-white">Open source</h3>
-        <p class="text-gray-400 text-sm mt-2">Games are loaded from your `games.json`, so updating is simple.</p>
-      </div>
+    <!-- Apps Section -->
+    <section id="apps-section" class="hidden">
+      <h2 class="text-2xl font-bold text-cyan-400 mb-4">Apps</h2>
+      <div id="apps-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-6"></div>
     </section>
+
+    <!-- No Results -->
+    <div id="no-results" class="text-center py-20 hidden">
+      <i data-lucide="frown" class="w-12 h-12 text-gray-500 mx-auto mb-4"></i>
+      <p class="text-xl text-gray-400">No items found. Try another search!</p>
+    </div>
   </main>
 
-  <footer class="mt-16 py-6 text-center text-gray-500 border-t border-gray-800">
-    <p>&copy; <span id="year"></span> Universal. Built with ❤️</p>
+  <!-- Footer -->
+  <footer class="mt-20 py-6 text-center text-gray-500 border-t border-gray-800">
+    <p>&copy; 2025 Universal Hub. Made with <span class="text-red-500">♥</span> | Powered by Pokelevel17</p>
   </footer>
 
   <script>
-    // Lucide icons
+    let allGames = [];
+    let allApps = [];
+    let currentTab = 'games';
+
+    async function loadData() {
+      try {
+        const [gamesRes, appsRes] = await Promise.all([
+          fetch('games.json'),
+          fetch('apps.json')
+        ]);
+
+        allGames = await gamesRes.json();
+        allApps = await appsRes.json();
+
+        renderItems('games');
+      } catch (err) {
+        console.error('Error loading data:', err);
+      }
+    }
+
+    function renderCard(item) {
+      const placeholder = `https://placehold.co/400x225/1E293B/E2E8F0?text=${encodeURIComponent(item.title)}`;
+      return `
+        <a href="${item.url}" target="_blank"
+          class="game-card block bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-cyan-500 shadow-xl">
+          <div class="h-28 bg-gray-700 flex items-center justify-center relative">
+            <img src="${placeholder}" alt="${item.title}" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gray-900/50 backdrop-blur-sm flex items-center justify-center">
+              <i data-lucide="${item.icon || 'app-window'}" class="w-10 h-10 text-cyan-400"></i>
+            </div>
+          </div>
+          <div class="p-3">
+            <h3 class="text-white text-base font-semibold truncate">${item.title}</h3>
+            <p class="text-gray-400 text-xs mt-1 capitalize">${item.category || ''}</p>
+          </div>
+        </a>
+      `;
+    }
+
+    function renderItems(type, searchTerm = '') {
+      const grid = document.getElementById(type === 'games' ? 'games-grid' : 'apps-grid');
+      const data = type === 'games' ? allGames : allApps;
+
+      const filtered = data.filter(item =>
+        item.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+
+      grid.innerHTML = '';
+
+      if (filtered.length === 0) {
+        document.getElementById('no-results').classList.remove('hidden');
+      } else {
+        document.getElementById('no-results').classList.add('hidden');
+        filtered.forEach(item => grid.insertAdjacentHTML('beforeend', renderCard(item)));
+        lucide.createIcons();
+      }
+    }
+
+    function filterItems() {
+      const term = document.getElementById('search-input').value;
+      renderItems(currentTab, term);
+    }
+
+    document.querySelectorAll('.tab-button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active-tab'));
+        btn.classList.add('active-tab');
+        currentTab = btn.dataset.tab;
+
+        document.getElementById('games-section').classList.toggle('hidden', currentTab !== 'games');
+        document.getElementById('apps-section').classList.toggle('hidden', currentTab !== 'apps');
+        renderItems(currentTab, document.getElementById('search-input').value);
+      });
+    });
+
     document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
-      document.getElementById('year').textContent = new Date().getFullYear();
-
-      // wire up hero search to games page
-      document.getElementById('hero-search').addEventListener('keyup', (e) => {
-        if (e.key === 'Enter') {
-          const q = e.target.value.trim();
-          if (q.length) window.location = `games.html?search=${encodeURIComponent(q)}`;
-          else window.location = 'games.html';
-        }
-      });
-
-      // load featured games from games.json (small strip)
-      fetch('/games.json').then(r => r.ok ? r.json() : Promise.reject()).then(data => {
-        const featured = (data || []).filter(g => g.category && g.category.toLowerCase()==='featured').slice(0,8);
-        const strip = document.getElementById('featured-strip');
-        featured.forEach(g => {
-          const el = document.createElement('a');
-          el.href = `play.html?id=${encodeURIComponent(g.id)}`
-          el.className = 'min-w-[220px] block bg-gray-800 rounded-lg border border-gray-700 overflow-hidden game-card';
-          el.innerHTML = `
-            <div class="p-3 flex items-center gap-3">
-              <div class="w-14 h-14 bg-gray-700 rounded-md flex items-center justify-center">
-                <i data-lucide="${g.icon||'gamepad'}" class="w-6 h-6 text-cyan-400"></i>
-              </div>
-              <div>
-                <div class="text-white font-semibold truncate">${g.title}</div>
-                <div class="text-xs text-gray-400">${g.category || ''}</div>
-              </div>
-            </div>
-          `;
-          strip.appendChild(el);
-        });
-        lucide.createIcons();
-      }).catch(()=>{ /* ignore if missing */ });
+      loadData();
     });
   </script>
 </body>
