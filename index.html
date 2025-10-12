@@ -55,6 +55,15 @@
             /* Inherits custom scrollbar from body */
             overflow-y: auto;
         }
+
+        /* Styles for the citation links */
+        .citation {
+            font-size: 0.7rem;
+            color: #67E8F9; /* Cyan 400 */
+            text-decoration: underline;
+            margin-top: 5px;
+            display: block;
+        }
     </style>
 </head>
 
@@ -78,40 +87,62 @@
 
     <!-- Main Content Area -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <!-- Search Bar and Greeting -->
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 p-6 bg-gray-800 rounded-xl shadow-lg border border-gray-700">
-            <div>
-                <h1 class="text-3xl font-bold text-white mb-1">Welcome Back.</h1>
-                <p class="text-gray-400">Dive into thousands of unblocked titles instantly.</p>
+        
+        <!-- 1. Game Grid View (Default) -->
+        <div id="game-grid-view">
+            <!-- Search Bar and Greeting -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 p-6 bg-gray-800 rounded-xl shadow-lg border border-gray-700">
+                <div>
+                    <h1 class="text-3xl font-bold text-white mb-1">Welcome Back.</h1>
+                    <p class="text-gray-400">Dive into thousands of unblocked titles instantly.</p>
+                </div>
+    
+                <div class="relative w-full md:w-80 mt-4 md:mt-0">
+                    <input type="text" id="search-input" placeholder="Search for games..." class="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 text-white placeholder-gray-400" onkeyup="filterGames()">
+                    <i data-lucide="search" class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2"></i>
+                </div>
             </div>
-
-            <div class="relative w-full md:w-80 mt-4 md:mt-0">
-                <input type="text" id="search-input" placeholder="Search for games..." class="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 text-white placeholder-gray-400" onkeyup="filterGames()">
-                <i data-lucide="search" class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2"></i>
+    
+            <!-- Category Tabs -->
+            <div class="mb-8 border-b border-gray-700">
+                <div class="flex space-x-2 overflow-x-auto pb-2">
+                    <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="All">All Games</button>
+                    <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50 active-tab" data-category="Featured">Featured</button>
+                    <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Arcade">Arcade</button>
+                    <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Racing">Racing</button>
+                    <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Puzzle">Puzzle</button>
+                    <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Strategy">Strategy</button>
+                </div>
+            </div>
+    
+            <!-- Games Grid Container -->
+            <div id="games-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+                <!-- Game cards will be injected here by JavaScript -->
+            </div>
+    
+            <!-- No Results Message -->
+            <div id="no-results" class="text-center py-20 hidden">
+                <i data-lucide="frown" class="w-12 h-12 text-gray-500 mx-auto mb-4"></i>
+                <p class="text-xl text-gray-400">No games found matching your criteria. Try another search or category!</p>
             </div>
         </div>
 
-        <!-- Category Tabs -->
-        <div class="mb-8 border-b border-gray-700">
-            <div class="flex space-x-2 overflow-x-auto pb-2">
-                <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="All">All Games</button>
-                <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50 active-tab" data-category="Featured">Featured</button>
-                <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Arcade">Arcade</button>
-                <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Racing">Racing</button>
-                <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Puzzle">Puzzle</button>
-                <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Strategy">Strategy</button>
+        <!-- 2. Game Player View (Hidden by default, simulates play.html) -->
+        <div id="game-player-view" class="hidden">
+            <!-- Game Title and Back Button -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 p-4 bg-gray-800 rounded-xl border border-gray-700">
+                <button onclick="exitGame()" class="flex items-center space-x-2 text-cyan-400 hover:text-white transition order-2 sm:order-1 mt-3 sm:mt-0">
+                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                    <span class="font-semibold">Back to Games</span>
+                </button>
+                <h2 id="player-game-title" class="text-2xl font-bold text-white truncate max-w-full order-1 sm:order-2">Loading Game...</h2>
             </div>
-        </div>
-
-        <!-- Games Grid Container -->
-        <div id="games-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-6">
-            <!-- Game cards will be injected here by JavaScript -->
-        </div>
-
-        <!-- No Results Message -->
-        <div id="no-results" class="text-center py-20 hidden">
-            <i data-lucide="frown" class="w-12 h-12 text-gray-500 mx-auto mb-4"></i>
-            <p class="text-xl text-gray-400">No games found matching your criteria. Try another search or category!</p>
+            
+            <!-- Game Iframe Container -->
+            <div id="game-iframe-container" class="w-full bg-black rounded-xl overflow-hidden shadow-2xl border-4 border-gray-700 aspect-video min-h-[70vh] flex items-center justify-center">
+                <p class="text-gray-400">Loading game content...</p>
+                <!-- Iframe injected here by JavaScript -->
+            </div>
         </div>
     </main>
 
@@ -121,36 +152,29 @@
     </footer>
 
     <!-- --- AI ASSISTANT CHAT WIDGET --- -->
-    <!-- Chat Floating Button -->
     <button id="chat-toggle-btn" class="fixed bottom-6 right-6 p-4 rounded-full bg-cyan-600 text-white shadow-xl hover:bg-cyan-500 transition-all z-[101]">
         <i data-lucide="message-square" class="w-6 h-6"></i>
     </button>
 
-    <!-- Chat Window -->
     <div id="chat-window" class="fixed bottom-20 right-6 w-80 h-96 bg-gray-800 rounded-xl shadow-2xl flex flex-col hidden z-[101] border border-gray-700 overflow-hidden">
-        <!-- Chat Header -->
         <div class="bg-gray-900 p-3 flex items-center justify-between border-b border-cyan-700">
             <div class="flex items-center space-x-2">
                 <i data-lucide="bot" class="w-5 h-5 text-cyan-400"></i>
-                <span class="font-semibold text-white">Quantum Assistant</span>
+                <span class="font-semibold text-white">Quantum Assistant (Grounded AI)</span>
             </div>
             <button onclick="toggleChat()" class="text-gray-400 hover:text-white">
                 <i data-lucide="minus" class="w-4 h-4"></i>
             </button>
         </div>
 
-        <!-- Message Display Area -->
         <div id="chat-messages" class="chat-messages flex-grow p-3 space-y-3">
-            <!-- Initial welcome message -->
             <div class="flex justify-start">
                 <div class="bg-cyan-800/50 text-white p-2 rounded-xl max-w-[80%] rounded-tl-none text-sm">
-                    Hello! I'm your Quantum Assistant. Ask me anything about games, tips, or what's new!
+                    Hello! I'm your **Grounded AI Assistant**. I can now answer complex questions by searching the web for up-to-date information.
                 </div>
             </div>
-            <!-- Messages will be appended here -->
         </div>
 
-        <!-- Input Area -->
         <div class="p-3 border-t border-gray-700 bg-gray-900">
             <div class="flex items-center space-x-2">
                 <input type="text" id="chat-input" placeholder="Type your message..." 
@@ -177,9 +201,18 @@
     const gamesGrid = document.getElementById('games-grid');
     const noResults = document.getElementById('no-results');
 
+    // --- View Switching DOM Elements ---
+    const gameGridView = document.getElementById('game-grid-view');
+    const gamePlayerView = document.getElementById('game-player-view');
+    const playerGameTitle = document.getElementById('player-game-title');
+    const gameIframeContainer = document.getElementById('game-iframe-container');
+
+
     // --- AI Assistant Constants and State ---
-    const API_KEY = ""; // Required by Canvas environment
-    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${API_KEY}`;
+    const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent';
+    const apiKey = ""; 
+
+    // Chat state
     let chatHistory = [];
     let isTyping = false;
 
@@ -194,7 +227,6 @@
     // --- Game Data Loading Logic ---
     async function loadGames() {
         try {
-            // Correcting to fetch from local file 'games.json' for deployment ease
             const response = await fetch('games.json'); 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}. Check if 'games.json' exists.`);
@@ -210,13 +242,62 @@
         }
     }
 
+    // --- Game Play Functions (Simulating play.html) ---
+
+    /**
+     * Switches to the game player view and loads the game.
+     * @param {string} url - The URL of the external game to load in the iframe.
+     * @param {string} title - The title of the game.
+     */
+    function startGame(url, title) {
+        // 1. Set title and inject Iframe
+        playerGameTitle.textContent = title;
+        // Use a clean title string for the iframe placeholder
+        const cleanTitle = title.replace(/'/g, "\\'");
+        gameIframeContainer.innerHTML = `
+            <iframe src="${url}" 
+                    title="${cleanTitle}"
+                    frameborder="0" 
+                    allowfullscreen 
+                    class="w-full h-full bg-transparent">
+            </iframe>
+        `;
+
+        // 2. Switch views
+        gameGridView.classList.add('hidden');
+        gamePlayerView.classList.remove('hidden');
+
+        // 3. Update window title and scroll to top
+        document.title = `${title} | Quantum Hub`;
+        window.scrollTo(0, 0); 
+    }
+
+    /**
+     * Exits the game player view and returns to the game grid.
+     */
+    function exitGame() {
+        // 1. Remove Iframe content (stops the game/audio)
+        gameIframeContainer.innerHTML = '<p class="text-gray-400">Loading game content...</p>';
+
+        // 2. Switch views
+        gamePlayerView.classList.add('hidden');
+        gameGridView.classList.remove('hidden');
+
+        // 3. Update window title
+        document.title = 'Quantum Hub | Unblocked Games Portal';
+        window.scrollTo(0, 0);
+    }
+
+
     // --- Game Dashboard Functions ---
+
     function renderGameCard(game) {
         const placeholderUrl = `https://placehold.co/400x225/1E293B/E2E8F0?text=${encodeURIComponent(game.title)}`;
+        // Use a click handler to call startGame instead of a direct <a> tag
         return `
-            <a href="${game.url}" target="_blank" class="game-card block bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-cyan-500 shadow-xl">
+            <div onclick="startGame('${game.url}', '${game.title.replace(/'/g, "\\'")}')" 
+                 class="game-card block bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-cyan-500 shadow-xl cursor-pointer">
                 <div class="h-28 bg-gray-700 flex items-center justify-center relative">
-                    <!-- Image handling: use game.image or placeholder -->
                     <img src="${game.image || placeholderUrl}" alt="${game.title}" class="w-full h-full object-cover" onerror="this.src='${placeholderUrl}'">
                     <div class="absolute inset-0 bg-gray-900/50 backdrop-blur-sm flex items-center justify-center">
                         <i data-lucide="${game.icon || 'gamepad'}" class="w-10 h-10 text-cyan-400"></i>
@@ -226,12 +307,11 @@
                     <h3 class="text-white text-base font-semibold truncate">${game.title}</h3>
                     <p class="text-gray-400 text-xs mt-1 capitalize">${game.category}</p>
                 </div>
-            </a>
+            </div>
         `;
     }
 
     function renderGames(category, searchTerm = '') {
-        // Filter out games that don't match the current category or search term
         const filteredGames = allGames.filter(game => {
             const catMatch = category === 'All' || game.category === category || (category === 'Featured' && game.category === 'Featured');
             const searchMatch = game.title.toLowerCase().includes(searchTerm.toLowerCase());
@@ -267,18 +347,16 @@
 
     function toggleChat() {
         chatWindow.classList.toggle('hidden');
-        // Change button icon when toggled
         const icon = chatToggleBtn.querySelector('i');
         icon.setAttribute('data-lucide', chatWindow.classList.contains('hidden') ? 'message-square' : 'x');
         lucide.createIcons();
 
-        // Scroll to bottom if opening
         if (!chatWindow.classList.contains('hidden')) {
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
     }
 
-    function displayMessage(text, isUser = false) {
+    function displayMessage(content, sources = [], isUser = false) {
         const messageContainer = document.createElement('div');
         messageContainer.className = `flex ${isUser ? 'justify-end' : 'justify-start'}`;
         
@@ -288,13 +366,25 @@
             ? 'bg-cyan-600 text-white rounded-xl rounded-br-none' 
             : 'bg-gray-700 text-white rounded-xl rounded-tl-none'
         }`;
-        // Simple text display for the message content
-        messageBubble.textContent = text; 
+        
+        messageBubble.textContent = content; 
+
+        if (sources.length > 0 && !isUser) {
+            sources.forEach(source => {
+                const citationLink = document.createElement('a');
+                citationLink.href = source.uri;
+                citationLink.target = "_blank";
+                citationLink.className = 'citation truncate mt-1';
+                citationLink.textContent = `Source: ${source.title || source.uri}`;
+                messageBubble.appendChild(citationLink);
+            });
+        }
 
         messageContainer.appendChild(messageBubble);
         chatMessages.appendChild(messageContainer);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
+
 
     function sendUserMessage() {
         if (isTyping) return;
@@ -302,42 +392,10 @@
         const userText = chatInput.value.trim();
         if (userText === '') return;
 
-        // 1. Display user message
-        displayMessage(userText, true);
-        
-        // 2. Add to history
-        chatHistory.push({ role: "user", parts: [{ text: userText }] });
-
-        // 3. Clear input
+        displayMessage(userText, [], true);
         chatInput.value = '';
         
-        // 4. Call AI
         callGeminiAPI(userText);
-    }
-
-    // Utility for exponential backoff during API calls
-    async function fetchWithRetry(url, options, maxRetries = 5) {
-        for (let i = 0; i < maxRetries; i++) {
-            try {
-                const response = await fetch(url, options);
-                if (response.status === 429 && i < maxRetries - 1) {
-                    const delay = Math.pow(2, i) * 1000;
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                    continue; // Retry
-                }
-                if (!response.ok) {
-                    throw new Error(`API request failed with status: ${response.status}`);
-                }
-                return response;
-            } catch (error) {
-                if (i < maxRetries - 1) {
-                    const delay = Math.pow(2, i) * 1000;
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                } else {
-                    throw error; // Re-throw the error on final attempt
-                }
-            }
-        }
     }
 
     async function callGeminiAPI(userQuery) {
@@ -345,65 +403,91 @@
         sendBtn.disabled = true;
         chatInput.disabled = true;
 
-        // Add a temporary '...' message to show the assistant is thinking
         const thinkingMessage = document.createElement('div');
         thinkingMessage.className = 'flex justify-start';
-        thinkingMessage.innerHTML = '<div id="thinking-bubble" class="bg-gray-700 text-white p-3 rounded-xl rounded-tl-none max-w-[80%] shadow-md text-sm">...Thinking</div>';
+        thinkingMessage.innerHTML = '<div id="thinking-bubble" class="bg-gray-700 text-white p-3 rounded-xl rounded-tl-none max-w-[80%] shadow-md text-sm">...Searching the web</div>';
         chatMessages.appendChild(thinkingMessage);
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        // UPDATED SYSTEM PROMPT: Now configured as a general-purpose AI assistant
-        const systemPrompt = `You are a friendly, concise, and highly knowledgeable general-purpose AI assistant. Your goal is to answer any question clearly and accurately, using Google Search grounding when necessary to provide up-to-date information. Keep your responses helpful and positive.`;
+        if (!apiKey && typeof __initial_auth_token === 'undefined') {
+             thinkingMessage.remove();
+             displayMessage("The **Grounded AI Assistant is blocked**! For external hosting (like GitHub Pages), you must insert your personal **Gemini API Key** into the 'apiKey' variable in the script section.", [], false);
+             isTyping = false;
+             sendBtn.disabled = false;
+             chatInput.disabled = false;
+             return;
+        }
+
+        const systemPrompt = "You are a friendly, concise, and highly knowledgeable AI assistant for an unblocked games portal called Quantum Hub. Your goal is to answer questions clearly and accurately using the provided search results when necessary.";
 
         const payload = {
-            contents: chatHistory,
+            contents: [{ parts: [{ text: userQuery }] }],
+            tools: [{ "google_search": {} }], 
             systemInstruction: {
                 parts: [{ text: systemPrompt }]
             },
-            // Enable Google Search to ground the response with up-to-date information
-            tools: [{ "google_search": {} }], 
         };
 
-        const options = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        };
+        const apiUrl = `${GEMINI_API_URL}?key=${apiKey}`;
 
-        try {
-            const response = await fetchWithRetry(API_URL, options);
+        const maxRetries = 5;
+        let response = null;
+        let success = false;
+        
+        for (let i = 0; i < maxRetries; i++) {
+            try {
+                response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    success = true;
+                    break; 
+                }
+            } catch (e) {
+                console.error(`Attempt ${i + 1} failed:`, e);
+            }
+            const delay = Math.pow(2, i) * 1000;
+            if (i < maxRetries - 1) {
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
+        }
+
+        thinkingMessage.remove();
+
+        if (success) {
             const result = await response.json();
-            
-            // Remove 'thinking' message
-            thinkingMessage.remove();
-
             const candidate = result.candidates?.[0];
-            let assistantText = "Sorry, I ran into an error getting that information.";
+            
+            let assistantText = "Sorry, I ran into an error getting that information from the AI model.";
+            let sources = [];
 
             if (candidate && candidate.content?.parts?.[0]?.text) {
                 assistantText = candidate.content.parts[0].text;
+
+                const groundingMetadata = candidate.groundingMetadata;
+                if (groundingMetadata && groundingMetadata.groundingAttributions) {
+                    sources = groundingMetadata.groundingAttributions
+                        .map(attribution => ({
+                            uri: attribution.web?.uri,
+                            title: attribution.web?.title,
+                        }))
+                        .filter(source => source.uri && source.title);
+                }
             }
 
-            // 5. Display AI response
-            displayMessage(assistantText, false);
-
-            // 6. Update history
-            chatHistory.push({ role: "model", parts: [{ text: assistantText }] });
-
-        } catch (error) {
-            console.error("Gemini API Error:", error);
-            // Remove 'thinking' message if still present, and display error
-            const existingThinking = document.getElementById('thinking-bubble');
-            if (existingThinking) {
-                existingThinking.parentElement.remove();
-            }
-            displayMessage("Oops! My connection seems to be blocked or interrupted. I can't look things up right now.", false);
-        } finally {
-            isTyping = false;
-            sendBtn.disabled = false;
-            chatInput.disabled = false;
-            chatInput.focus();
+            displayMessage(assistantText, sources, false);
+            
+        } else {
+            displayMessage("Oops! I failed to connect to the Gemini API after multiple retries. Please check your network connection or API key status.", [], false);
         }
+
+        isTyping = false;
+        sendBtn.disabled = false;
+        chatInput.disabled = false;
+        chatInput.focus();
     }
 
     // --- Event Listeners and Initialization ---
@@ -411,7 +495,6 @@
         btn.addEventListener('click', () => switchCategory(btn.dataset.category));
     });
 
-    // Attach chat toggle function to the button
     chatToggleBtn.addEventListener('click', toggleChat);
 
     // Initialize the dashboard on load
