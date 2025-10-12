@@ -100,7 +100,7 @@
 
   async function loadGames() {
     try {
-      const response = await fetch('games.json');
+      const response = await fetch('https://raw.githubusercontent.com/Pokelevel17/Universal/main/Games/games.json');
       allGames = await response.json();
       renderGames(currentCategory);
     } catch (error) {
