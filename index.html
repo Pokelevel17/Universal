@@ -78,10 +78,14 @@
                 <span class="text-2xl font-extrabold text-white">Quantum<span class="text-cyan-400">Hub</span></span>
             </div>
 
-            <!-- Settings Button (Replaced Nav Links) -->
-            <button class="text-gray-300 hover:text-cyan-400 p-2 rounded-full hover:bg-gray-800 transition duration-150">
-                <i data-lucide="settings" class="w-6 h-6"></i>
-            </button>
+            <!-- Game Suggestions Link (Replaces Settings Button) -->
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfGZL6dP1snuieVUR9V0rjWzOGhx7oK3t5O0kG_S5gDAw6ZIg/viewform?usp=header"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="flex items-center space-x-2 px-4 py-2 bg-cyan-600 text-white text-sm font-semibold rounded-lg shadow-lg hover:bg-cyan-500 transition duration-150 ease-in-out">
+                <i data-lucide="send" class="w-4 h-4"></i>
+                <span>Game Suggestions</span>
+            </a>
         </div>
     </header>
 
@@ -96,13 +100,13 @@
                     <h1 class="text-3xl font-bold text-white mb-1">Welcome Back.</h1>
                     <p class="text-gray-400">Dive into thousands of unblocked titles instantly.</p>
                 </div>
-    
+        
                 <div class="relative w-full md:w-80 mt-4 md:mt-0">
                     <input type="text" id="search-input" placeholder="Search for games..." class="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 text-white placeholder-gray-400" onkeyup="filterGames()">
                     <i data-lucide="search" class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2"></i>
                 </div>
             </div>
-    
+        
             <!-- Category Tabs -->
             <div class="mb-8 border-b border-gray-700">
                 <div class="flex space-x-2 overflow-x-auto pb-2">
@@ -114,12 +118,12 @@
                     <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Strategy">Strategy</button>
                 </div>
             </div>
-    
+        
             <!-- Games Grid Container -->
             <div id="games-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-6">
                 <!-- Game cards will be injected here by JavaScript -->
             </div>
-    
+        
             <!-- No Results Message -->
             <div id="no-results" class="text-center py-20 hidden">
                 <i data-lucide="frown" class="w-12 h-12 text-gray-500 mx-auto mb-4"></i>
@@ -178,8 +182,8 @@
         <div class="p-3 border-t border-gray-700 bg-gray-900">
             <div class="flex items-center space-x-2">
                 <input type="text" id="chat-input" placeholder="Type your message..." 
-                       class="flex-grow p-2 text-sm bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-cyan-500 focus:border-cyan-500" 
-                       onkeypress="if(event.key === 'Enter') sendUserMessage()">
+                        class="flex-grow p-2 text-sm bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-cyan-500 focus:border-cyan-500" 
+                        onkeypress="if(event.key === 'Enter') sendUserMessage()">
                 <button onclick="sendUserMessage()" id="send-btn" class="p-2 bg-cyan-600 text-white rounded-full hover:bg-cyan-500 transition disabled:bg-gray-500 disabled:cursor-not-allowed">
                     <i data-lucide="send" class="w-4 h-4"></i>
                 </button>
