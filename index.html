@@ -1,49 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Universal | Games & Apps Hub</title>
-
-  <!-- TailwindCSS CDN -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quantum Hub | Unblocked Games Portal</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-
     body {
       font-family: 'Inter', sans-serif;
       background-color: #0F172A;
       color: #E2E8F0;
       min-height: 100vh;
     }
-
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
+    ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-thumb {
       background: #334155;
       border-radius: 10px;
     }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #475569;
-    }
-
-    .game-card {
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    .game-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
     .game-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 15px 25px rgba(6, 182, 212, 0.2);
       border-color: #06B6D4;
     }
-
-    .tab-button {
-      transition: all 0.3s ease;
-    }
-
+    .tab-button { transition: all 0.3s ease; }
     .active-tab {
       background-color: #0E7490;
       color: white;
@@ -54,17 +37,17 @@
 
 <body class="antialiased">
 
-  <!-- Header -->
   <header class="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-sm shadow-xl border-b border-gray-700">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
       <div class="flex items-center space-x-2">
         <i data-lucide="zap" class="w-6 h-6 text-cyan-400"></i>
-        <span class="text-2xl font-extrabold text-white">Universal<span class="text-cyan-400">Hub</span></span>
+        <span class="text-2xl font-extrabold text-white">Quantum<span class="text-cyan-400">Hub</span></span>
       </div>
       <nav class="hidden sm:flex space-x-6">
-        <a href="#games" class="text-gray-300 hover:text-cyan-400 font-medium">Games</a>
-        <a href="#apps" class="text-gray-300 hover:text-cyan-400 font-medium">Apps</a>
-        <a href="#about" class="text-gray-300 hover:text-cyan-400 font-medium">About</a>
+        <a href="#" class="text-gray-300 hover:text-cyan-400 transition font-medium">Home</a>
+        <a href="#games" class="text-gray-300 hover:text-cyan-400 transition font-medium">Games</a>
+        <a href="#apps" class="text-gray-300 hover:text-cyan-400 transition font-medium">Apps</a>
+        <a href="#about" class="text-gray-300 hover:text-cyan-400 transition font-medium">About</a>
       </nav>
       <button class="sm:hidden text-gray-300 hover:text-cyan-400">
         <i data-lucide="menu" class="w-6 h-6"></i>
@@ -72,139 +55,115 @@
     </div>
   </header>
 
-  <!-- Main -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-    <!-- Search -->
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 p-6 bg-gray-800 rounded-xl shadow-lg border border-gray-700">
       <div>
-        <h1 class="text-3xl font-bold text-white mb-1">Welcome to Universal Hub</h1>
-        <p class="text-gray-400">Unblocked Games & Apps in one place.</p>
+        <h1 class="text-3xl font-bold text-white mb-1">Welcome Back.</h1>
+        <p class="text-gray-400">Dive into thousands of unblocked titles instantly.</p>
       </div>
-
       <div class="relative w-full md:w-80 mt-4 md:mt-0">
-        <input
-          type="text"
-          id="search-input"
-          placeholder="Search for games or apps..."
-          class="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 text-white placeholder-gray-400"
-          onkeyup="filterItems()"
-        />
+        <input type="text" id="search-input" placeholder="Search for games..." class="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 text-white placeholder-gray-400" onkeyup="filterGames()">
         <i data-lucide="search" class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2"></i>
       </div>
     </div>
 
-    <!-- Tabs -->
     <div class="mb-8 border-b border-gray-700">
       <div class="flex space-x-2 overflow-x-auto pb-2">
-        <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50 active-tab" data-tab="games">Games</button>
-        <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-tab="apps">Apps</button>
+        <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="All">All Games</button>
+        <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50 active-tab" data-category="Featured">Featured</button>
+        <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Arcade">Arcade</button>
+        <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Racing">Racing</button>
+        <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Puzzle">Puzzle</button>
+        <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Strategy">Strategy</button>
       </div>
     </div>
 
-    <!-- Games Section -->
-    <section id="games-section">
-      <h2 class="text-2xl font-bold text-cyan-400 mb-4">Games</h2>
-      <div id="games-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-6"></div>
-    </section>
+    <div id="games-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-6"></div>
 
-    <!-- Apps Section -->
-    <section id="apps-section" class="hidden">
-      <h2 class="text-2xl font-bold text-cyan-400 mb-4">Apps</h2>
-      <div id="apps-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-6"></div>
-    </section>
-
-    <!-- No Results -->
     <div id="no-results" class="text-center py-20 hidden">
       <i data-lucide="frown" class="w-12 h-12 text-gray-500 mx-auto mb-4"></i>
-      <p class="text-xl text-gray-400">No items found. Try another search!</p>
+      <p class="text-xl text-gray-400">No games found matching your criteria. Try another search or category!</p>
     </div>
   </main>
 
-  <!-- Footer -->
   <footer class="mt-20 py-6 text-center text-gray-500 border-t border-gray-800">
-    <p>&copy; 2025 Universal Hub. Made with <span class="text-red-500">♥</span> | Powered by Pokelevel17</p>
+    <p>&copy; 2025 Quantum Hub. Made with <span class="text-red-500">♥</span> | Powered by Fusionzzz</p>
   </footer>
 
-  <script>
-    let allGames = [];
-    let allApps = [];
-    let currentTab = 'games';
+<script>
+  document.addEventListener('DOMContentLoaded', () => lucide.createIcons());
 
-    async function loadData() {
-      try {
-        const [gamesRes, appsRes] = await Promise.all([
-          fetch('games.json'),
-          fetch('apps.json')
-        ]);
+  let allGames = [];
+  let currentCategory = 'Featured';
+  const gamesGrid = document.getElementById('games-grid');
+  const noResults = document.getElementById('no-results');
 
-        allGames = await gamesRes.json();
-        allApps = await appsRes.json();
-
-        renderItems('games');
-      } catch (err) {
-        console.error('Error loading data:', err);
-      }
+  async function loadGames() {
+    try {
+      const response = await fetch('games.json');
+      allGames = await response.json();
+      renderGames(currentCategory);
+    } catch (error) {
+      console.error('Failed to load games.json:', error);
+      gamesGrid.innerHTML = `<p class="text-red-400">Error loading games list. Check console for details.</p>`;
     }
+  }
 
-    function renderCard(item) {
-      const placeholder = `https://placehold.co/400x225/1E293B/E2E8F0?text=${encodeURIComponent(item.title)}`;
-      return `
-        <a href="${item.url}" target="_blank"
-          class="game-card block bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-cyan-500 shadow-xl">
-          <div class="h-28 bg-gray-700 flex items-center justify-center relative">
-            <img src="${placeholder}" alt="${item.title}" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gray-900/50 backdrop-blur-sm flex items-center justify-center">
-              <i data-lucide="${item.icon || 'app-window'}" class="w-10 h-10 text-cyan-400"></i>
-            </div>
+  function renderGameCard(game) {
+    const placeholderUrl = `https://placehold.co/400x225/1E293B/E2E8F0?text=${encodeURIComponent(game.title)}`;
+    return `
+      <a href="${game.url}" target="_blank" class="game-card block bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-cyan-500 shadow-xl">
+        <div class="h-28 bg-gray-700 flex items-center justify-center relative">
+          <img src="${game.image || placeholderUrl}" alt="${game.title}" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gray-900/50 backdrop-blur-sm flex items-center justify-center">
+            <i data-lucide="${game.icon || 'gamepad'}" class="w-10 h-10 text-cyan-400"></i>
           </div>
-          <div class="p-3">
-            <h3 class="text-white text-base font-semibold truncate">${item.title}</h3>
-            <p class="text-gray-400 text-xs mt-1 capitalize">${item.category || ''}</p>
-          </div>
-        </a>
-      `;
-    }
+        </div>
+        <div class="p-3">
+          <h3 class="text-white text-base font-semibold truncate">${game.title}</h3>
+          <p class="text-gray-400 text-xs mt-1 capitalize">${game.category}</p>
+        </div>
+      </a>
+    `;
+  }
 
-    function renderItems(type, searchTerm = '') {
-      const grid = document.getElementById(type === 'games' ? 'games-grid' : 'apps-grid');
-      const data = type === 'games' ? allGames : allApps;
-
-      const filtered = data.filter(item =>
-        item.title.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-
-      grid.innerHTML = '';
-
-      if (filtered.length === 0) {
-        document.getElementById('no-results').classList.remove('hidden');
-      } else {
-        document.getElementById('no-results').classList.add('hidden');
-        filtered.forEach(item => grid.insertAdjacentHTML('beforeend', renderCard(item)));
-        lucide.createIcons();
-      }
-    }
-
-    function filterItems() {
-      const term = document.getElementById('search-input').value;
-      renderItems(currentTab, term);
-    }
-
-    document.querySelectorAll('.tab-button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active-tab'));
-        btn.classList.add('active-tab');
-        currentTab = btn.dataset.tab;
-
-        document.getElementById('games-section').classList.toggle('hidden', currentTab !== 'games');
-        document.getElementById('apps-section').classList.toggle('hidden', currentTab !== 'apps');
-        renderItems(currentTab, document.getElementById('search-input').value);
-      });
+  function renderGames(category, searchTerm = '') {
+    const filteredGames = allGames.filter(game => {
+      const catMatch = category === 'All' || game.category === category || (category === 'Featured' && game.category === 'Featured');
+      const searchMatch = game.title.toLowerCase().includes(searchTerm.toLowerCase());
+      return catMatch && searchMatch;
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
+    gamesGrid.innerHTML = '';
+    if (filteredGames.length === 0) {
+      noResults.classList.remove('hidden');
+    } else {
+      noResults.classList.add('hidden');
+      filteredGames.forEach(game => gamesGrid.insertAdjacentHTML('beforeend', renderGameCard(game)));
       lucide.createIcons();
-      loadData();
+    }
+  }
+
+  function switchCategory(newCategory) {
+    currentCategory = newCategory;
+    document.querySelectorAll('.tab-button').forEach(btn => {
+      btn.classList.toggle('active-tab', btn.dataset.category === newCategory);
     });
-  </script>
+    document.getElementById('search-input').value = '';
+    renderGames(currentCategory);
+  }
+
+  function filterGames() {
+    const term = document.getElementById('search-input').value;
+    renderGames('All', term);
+    document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active-tab'));
+  }
+
+  document.querySelectorAll('.tab-button').forEach(btn => {
+    btn.addEventListener('click', () => switchCategory(btn.dataset.category));
+  });
+
+  window.onload = () => loadGames();
+</script>
 </body>
 </html>
