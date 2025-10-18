@@ -1,575 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universal Arcade</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        /* Custom styles and configuration */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0F172A; /* Slate 900 base */
-            color: #E2E8F0; /* Slate 200 for general text */
-            min-height: 100vh;
-        }
-
-        /* Customize scrollbar for a dark theme */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #334155; /* Slate 700 */
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #475569; /* Slate 600 */
-        }
-
-        .game-card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .game-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 15px 25px rgba(6, 182, 212, 0.2); /* Cyan glow on hover */
-            border-color: #06B6D4; /* Cyan 500 */
-        }
-
-        .tab-button {
-            transition: all 0.3s ease;
-        }
-        
-        .active-tab {
-            background-color: #0E7490; /* Cyan 700 */
-            color: white;
-            border-bottom: 3px solid #06B6D4; /* Cyan 500 */
-        }
-
-        /* Styling for the chat message window */
-        .chat-messages {
-            /* Inherits custom scrollbar from body */
-            overflow-y: auto;
-        }
-
-        /* Styles for the citation links */
-        .citation {
-            font-size: 0.7rem;
-            color: #67E8F9; /* Cyan 400 */
-            text-decoration: underline;
-            margin-top: 5px;
-            display: block;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Universal Arcade</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+    body { font-family: 'Inter', sans-serif; background-color: #0F172A; color: #E2E8F0; min-height: 100vh; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    .game-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .game-card:hover { transform: translateY(-4px); box-shadow: 0 15px 25px rgba(6,182,212,0.2); border-color: #06B6D4; }
+    .tab-button { transition: all 0.3s ease; }
+    .active-tab { background-color: #0E7490; color: white; border-bottom: 3px solid #06B6D4; }
+    .chat-messages { overflow-y: auto; }
+    .citation { font-size: 0.7rem; color: #67E8F9; text-decoration: underline; margin-top: 5px; display: block; }
+</style>
 </head>
-
 <body class="antialiased">
 
-    <!-- Header / Navigation Bar -->
-    <header class="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-sm shadow-xl border-b border-gray-700">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <!-- Logo / Title -->
-            <div class="flex items-center space-x-2">
-                <i data-lucide="zap" class="w-6 h-6 text-cyan-400"></i>
-                <span class="text-2xl font-extrabold text-white">Universal<span class="text-cyan-400">Arcade</span></span>
-            </div>
+<!-- Header / Navigation Bar -->
+<header class="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-sm shadow-xl border-b border-gray-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+        <!-- Logo / Title -->
+        <div class="flex items-center space-x-2">
+            <i data-lucide="zap" class="w-6 h-6 text-cyan-400"></i>
+            <span class="text-2xl font-extrabold text-white">Universal<span class="text-cyan-400">Arcade</span></span>
+        </div>
 
-            <!-- Game Suggestions Link -->
+        <!-- Proxy and Game Suggestions Buttons -->
+        <div class="flex space-x-2">
+            <a href="proxy.html"
+               class="flex items-center justify-center py-2 px-4 bg-cyan-600 text-white text-sm font-semibold rounded-lg shadow-lg hover:bg-cyan-500 transition duration-150 ease-in-out">
+                <i data-lucide="globe" class="w-5 h-5 mr-2"></i>
+                <span>Open Proxy</span>
+            </a>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSfGZL6dP1snuieVUR9V0rjWzOGhx7oK3t5O0kG_S5gDAw6ZIg/viewform?usp=header"
                target="_blank"
-               rel="noopener noreferrer"
-               class="flex items-center space-x-2 px-4 py-2 bg-cyan-600 text-white text-sm font-semibold rounded-lg shadow-lg hover:bg-cyan-500 transition duration-150 ease-in-out">
-                <i data-lucide="send" class="w-4 h-4"></i>
+               class="flex items-center justify-center py-2 px-4 bg-cyan-600 text-white text-sm font-semibold rounded-lg shadow-lg hover:bg-cyan-500 transition duration-150 ease-in-out">
+                <i data-lucide="send" class="w-5 h-5 mr-2"></i>
                 <span>Game Suggestions</span>
             </a>
         </div>
-    </header>
-
-    <!-- Main Content Area -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        
-        <!-- 1. Game Grid View (Default) -->
-        <div id="game-grid-view">
-            <!-- Search Bar and Greeting -->
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 p-6 bg-gray-800 rounded-xl shadow-lg border border-gray-700">
-                <div>
-                    <h1 class="text-3xl font-bold text-white mb-1">Welcome To Universal Arcade!</h1>
-                    <p class="text-gray-400">One of the best unblocked game websites with a ton of games and gets updated weekly!</p>
-                </div>
-        
-                <div class="relative w-full md:w-80 mt-4 md:mt-0">
-                    <input type="text" id="search-input" placeholder="Search for games..." class="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 text-white placeholder-gray-400" onkeyup="filterGames()">
-                    <i data-lucide="search" class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2"></i>
-                </div>
-            </div>
-        
-            <!-- Category Tabs -->
-            <div class="mb-8 border-b border-gray-700">
-                <div class="flex space-x-2 overflow-x-auto pb-2">
-                    <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="All">All Games</button>
-                    <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50 active-tab" data-category="HTML5">HTML5</button>
-                    <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Emulator">Emulator</button>
-                    <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Ruffle">Ruffle</button>
-                    <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Scratch">Scratch</button>
-                </div>
-            </div>
-        
-            <!-- Games Grid Container -->
-            <div id="games-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-6">
-                <!-- Game cards will be injected here by JavaScript -->
-            </div>
-        
-            <!-- No Results Message -->
-            <div id="no-results" class="text-center py-20 hidden">
-                <i data-lucide="frown" class="w-12 h-12 text-gray-500 mx-auto mb-4"></i>
-                <p class="text-xl text-gray-400">No games found... Try searching something else!</p>
-            </div>
-        </div>
-
-        <!-- 2. Game Player View (Hidden by default, simulates play.html) -->
-        <div id="game-player-view" class="hidden">
-            <!-- Game Title, Back Button, and Fullscreen Button -->
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 p-4 bg-gray-800 rounded-xl border border-gray-700">
-                <!-- Back Button (Order 2 on mobile, Order 1 on desktop) -->
-                <button onclick="exitGame()" class="flex items-center space-x-2 text-cyan-400 hover:text-white transition order-2 sm:order-1 mt-3 sm:mt-0">
-                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
-                    <span class="font-semibold">Back to Games</span>
-                </button>
-
-                <!-- Title and Fullscreen Button Group (Order 1 on mobile, Order 2 on desktop) -->
-                <div class="flex items-center space-x-3 order-1 sm:order-2">
-                    <h2 id="player-game-title" class="text-2xl font-bold text-white truncate max-w-full">Loading Game...</h2>
-                    
-                    <!-- Fullscreen Button -->
-                    <button onclick="toggleFullscreen()" title="Toggle Fullscreen"
-                            class="p-2 rounded-lg bg-gray-700 text-cyan-400 hover:bg-cyan-500 hover:text-white transition duration-150 flex-shrink-0 shadow-md">
-                        <i id="fullscreen-icon" data-lucide="maximize" class="w-5 h-5"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Game Iframe Container -->
-            <div id="game-iframe-container" class="w-full bg-black rounded-xl overflow-hidden shadow-2xl border-4 border-gray-700 aspect-video min-h-[70vh] flex items-center justify-center">
-                <p class="text-gray-400">Loading game content...</p>
-                <!-- Iframe injected here by JavaScript -->
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="mt-20 py-6 text-center text-gray-500 border-t border-gray-800">
-        <p>&copy; 2025 Universal Arcade. Made by Fusionzzz</p>
-    </footer>
-
-    <!-- --- AI ASSISTANT CHAT WIDGET --- -->
-    <button id="chat-toggle-btn" class="fixed bottom-6 right-6 p-4 rounded-full bg-cyan-600 text-white shadow-xl hover:bg-cyan-500 transition-all z-[101]">
-        <i data-lucide="message-square" class="w-6 h-6"></i>
-    </button>
-
-    <div id="chat-window" class="fixed bottom-20 right-6 w-80 h-96 bg-gray-800 rounded-xl shadow-2xl flex flex-col hidden z-[101] border border-gray-700 overflow-hidden">
-        <div class="bg-gray-900 p-3 flex items-center justify-between border-b border-cyan-700">
-            <div class="flex items-center space-x-2">
-                <i data-lucide="bot" class="w-5 h-5 text-cyan-400"></i>
-                <span class="font-semibold text-white">Universal AI</span>
-            </div>
-            <button onclick="toggleChat()" class="text-gray-400 hover:text-white">
-                <i data-lucide="minus" class="w-4 h-4"></i>
-            </button>
-        </div>
-
-        <div id="chat-messages" class="chat-messages flex-grow p-3 space-y-3">
-            <div class="flex justify-start">
-                <div class="bg-cyan-800/50 text-white p-2 rounded-xl max-w-[80%] rounded-tl-none text-sm">
-                    Hello! Im Universal Arcades AI Bot Where You Can Ask Anything And I Have A Answer!
-                </div>
-            </div>
-        </div>
-
-        <div class="p-3 border-t border-gray-700 bg-gray-900">
-            <div class="flex items-center space-x-2">
-                <input type="text" id="chat-input" placeholder="Type your message..." 
-                        class="flex-grow p-2 text-sm bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-cyan-500 focus:border-cyan-500" 
-                        onkeypress="if(event.key === 'Enter') sendUserMessage()">
-                <button onclick="sendUserMessage()" id="send-btn" class="p-2 bg-cyan-600 text-white rounded-full hover:bg-cyan-500 transition disabled:bg-gray-500 disabled:cursor-not-allowed">
-                    <i data-lucide="send" class="w-4 h-4"></i>
-                </button>
-            </div>
-        </div>
     </div>
-    <!-- --- END AI ASSISTANT CHAT WIDGET --- -->
+</header>
 
+<!-- Main Content Area -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+    <!-- Game Grid View -->
+    <div id="game-grid-view">
+
+        <!-- Greeting -->
+        <div class="mb-10 p-6 bg-gray-800 rounded-xl shadow-lg border border-gray-700">
+            <h1 class="text-3xl font-bold text-white mb-1">Welcome To Universal Arcade!</h1>
+            <p class="text-gray-400">One of the best unblocked game websites with a ton of games and gets updated weekly!</p>
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="mb-8 border-b border-gray-700">
+            <div class="flex space-x-2 overflow-x-auto pb-2">
+                <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="All">All Games</button>
+                <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50 active-tab" data-category="HTML5">HTML5</button>
+                <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Emulator">Emulator</button>
+                <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Ruffle">Ruffle</button>
+                <button class="tab-button px-5 py-2 rounded-t-lg text-sm font-semibold text-gray-400 hover:bg-gray-700/50" data-category="Scratch">Scratch</button>
+            </div>
+        </div>
+
+        <!-- Games Grid Container -->
+        <div id="games-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-6"></div>
+
+        <!-- No Results Message -->
+        <div id="no-results" class="text-center py-20 hidden">
+            <i data-lucide="frown" class="w-12 h-12 text-gray-500 mx-auto mb-4"></i>
+            <p class="text-xl text-gray-400">No games found... Try searching something else!</p>
+        </div>
+
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="mt-20 py-6 text-center text-gray-500 border-t border-gray-800">
+    <p>&copy; 2025 Universal Arcade. Made by Fusionzzz</p>
+</footer>
 
 <script>
-    // Initialize Lucide Icons after the DOM is loaded
-    document.addEventListener('DOMContentLoaded', () => {
-        lucide.createIcons();
-    });
+document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); });
 
-    // --- Core Game Variables & DOM Elements ---
-    let allGames = [];
-    let currentCategory = 'Featured';
-    const gamesGrid = document.getElementById('games-grid');
-    const noResults = document.getElementById('no-results');
+let allGames = [], currentCategory = 'Featured';
+const gamesGrid = document.getElementById('games-grid'), noResults = document.getElementById('no-results');
 
-    // --- View Switching DOM Elements ---
-    const gameGridView = document.getElementById('game-grid-view');
-    const gamePlayerView = document.getElementById('game-player-view');
-    const playerGameTitle = document.getElementById('player-game-title');
-    const gameIframeContainer = document.getElementById('game-iframe-container');
-
-
-    // --- AI Assistant Constants and State ---
-    const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent';
-    const apiKey = "AIzaSyA5KeiPYC8IZRxameNkStkYGE6p153w2NU"; 
-
-    // Chat state
-    let chatHistory = [];
-    let isTyping = false;
-
-    // --- DOM Elements for Chat ---
-    const chatWindow = document.getElementById('chat-window');
-    const chatToggleBtn = document.getElementById('chat-toggle-btn');
-    const chatMessages = document.getElementById('chat-messages');
-    const chatInput = document.getElementById('chat-input');
-    const sendBtn = document.getElementById('send-btn');
-    
-    // --- Load games from games.json ---
 function loadGames() {
     fetch('games.json')
         .then(res => res.json())
-        .then(data => {
-            allGames = data;
-            renderGames(currentCategory);
-        })
-        .catch(err => {
-            console.error('Failed to load games.json, using empty array.', err);
-            allGames = [];
-            renderGames(currentCategory);
-        });
+        .then(data => { allGames = data; renderGames(currentCategory); })
+        .catch(err => { console.error(err); allGames = []; renderGames(currentCategory); });
 }
 
-    // --- Game Play Functions (Simulating play.html) ---
-
-    /**
-     * Switches to the game player view and loads the game.
-     * @param {string} url - The URL of the external game to load in the iframe.
-     * @param {string} title - The title of the game.
-     */
-    function startGame(url, title) {
-        // 1. Set title and inject Iframe
-        playerGameTitle.textContent = title;
-        // Use a clean title string for the iframe placeholder
-        const cleanTitle = title.replace(/'/g, "\\'");
-        gameIframeContainer.innerHTML = `
-            <iframe src="${url}" 
-                    title="${cleanTitle}"
-                    frameborder="0" 
-                    allowfullscreen 
-                    class="w-full h-full bg-transparent">
-            </iframe>
-        `;
-
-        // 2. Switch views
-        gameGridView.classList.add('hidden');
-        gamePlayerView.classList.remove('hidden');
-
-        // 3. Update window title and scroll to top
-        document.title = `${title} | Universal Arcade`;
-        window.scrollTo(0, 0); 
-    }
-
-    /**
-     * Exits the game player view and returns to the game grid.
-     */
-    function exitGame() {
-        // If currently in fullscreen mode (via the button), exit it first
-        if (document.fullscreenElement) {
-            document.exitFullscreen();
-        }
-
-        // 1. Remove Iframe content (stops the game/audio)
-        gameIframeContainer.innerHTML = '<p class="text-gray-400">Loading game content...</p>';
-
-        // 2. Switch views
-        gamePlayerView.classList.add('hidden');
-        gameGridView.classList.remove('hidden');
-
-        // 3. Update window title
-        document.title = 'Universal Arcade';
-        window.scrollTo(0, 0);
-    }
-    
-    /**
-     * Toggles fullscreen mode for the game iframe container.
-     */
-    function toggleFullscreen() {
-        const container = document.getElementById('game-iframe-container');
-        const icon = document.getElementById('fullscreen-icon');
-
-        if (!document.fullscreenElement) {
-            // Enter fullscreen
-            const requestFullscreen = container.requestFullscreen || 
-                                    container.mozRequestFullScreen || 
-                                    container.webkitRequestFullscreen || 
-                                    container.msRequestFullscreen;
-
-            if (requestFullscreen) {
-                requestFullscreen.call(container).then(() => {
-                    icon.setAttribute('data-lucide', 'minimize');
-                    lucide.createIcons();
-                }).catch(err => {
-                    console.error("Error attempting to enable fullscreen:", err);
-                });
-            } else {
-                // Fallback for browsers that don't support fullscreen API
-                console.warn("Fullscreen API not supported on this container.");
-            }
-        } else {
-            // Exit fullscreen
-            const exitFullscreen = document.exitFullscreen || 
-                                document.mozCancelFullScreen || 
-                                document.webkitExitFullscreen || 
-                                document.msExitFullscreen;
-            
-            if (exitFullscreen) {
-                exitFullscreen.call(document).then(() => {
-                    icon.setAttribute('data-lucide', 'maximize');
-                    lucide.createIcons();
-                }).catch(err => {
-                    console.error("Error attempting to disable fullscreen:", err);
-                });
-            }
-        }
-    }
-
-    // Listener to update the icon if the user exits using the ESC key
-    document.addEventListener('fullscreenchange', () => {
-        const icon = document.getElementById('fullscreen-icon');
-        if (!icon) return;
-        
-        if (document.fullscreenElement) {
-            icon.setAttribute('data-lucide', 'minimize');
-        } else {
-            icon.setAttribute('data-lucide', 'maximize');
-        }
-        lucide.createIcons();
-    });
-
-
-    // --- Game Dashboard Functions ---
-
-    function renderGameCard(game) {
-        const placeholderUrl = `https://placehold.co/400x225/1E293B/E2E8F0?text=${encodeURIComponent(game.title)}`;
-        // Use a click handler to call startGame instead of a direct <a> tag
-        return `
-            <div onclick="startGame('${game.url}', '${game.title.replace(/'/g, "\\'")}')" 
-                 class="game-card block bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-cyan-500 shadow-xl cursor-pointer">
+function renderGameCard(game){
+    const placeholderUrl=`https://placehold.co/400x225/1E293B/E2E8F0?text=${encodeURIComponent(game.title)}`;
+    return `<div onclick="startGame('${game.url}','${game.title.replace(/'/g,"\\'")}')" class="game-card block bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-cyan-500 shadow-xl cursor-pointer">
                 <div class="h-28 bg-gray-700 flex items-center justify-center relative">
-                    <img src="${game.image || placeholderUrl}" alt="${game.title}" class="w-full h-full object-cover" onerror="this.src='${placeholderUrl}'">
+                    <img src="${game.image||placeholderUrl}" alt="${game.title}" class="w-full h-full object-cover" onerror="this.src='${placeholderUrl}'">
                     <div class="absolute inset-0 bg-gray-900/50 backdrop-blur-sm flex items-center justify-center">
-                        <i data-lucide="${game.icon || 'gamepad'}" class="w-10 h-10 text-cyan-400"></i>
+                        <i data-lucide="${game.icon||'gamepad'}" class="w-10 h-10 text-cyan-400"></i>
                     </div>
                 </div>
                 <div class="p-3">
                     <h3 class="text-white text-base font-semibold truncate">${game.title}</h3>
                     <p class="text-gray-400 text-xs mt-1 capitalize">${game.category}</p>
                 </div>
-            </div>
-        `;
-    }
+            </div>`;
+}
 
-    function renderGames(category, searchTerm = '') {
-        const filteredGames = allGames.filter(game => {
-            const catMatch = category === 'All' || game.category === category || (category === 'Featured' && game.category === 'Featured');
-            const searchMatch = game.title.toLowerCase().includes(searchTerm.toLowerCase());
-            return catMatch && searchMatch;
-        });
-
-        gamesGrid.innerHTML = '';
-        if (filteredGames.length === 0) {
-            noResults.classList.remove('hidden');
-        } else {
-            noResults.classList.add('hidden');
-            filteredGames.forEach(game => gamesGrid.insertAdjacentHTML('beforeend', renderGameCard(game)));
-            lucide.createIcons();
-        }
-    }
-
-    function switchCategory(newCategory) {
-        currentCategory = newCategory;
-        document.querySelectorAll('.tab-button').forEach(btn => {
-            btn.classList.toggle('active-tab', btn.dataset.category === newCategory);
-        });
-        document.getElementById('search-input').value = '';
-        renderGames(currentCategory);
-    }
-
-    function filterGames() {
-        const term = document.getElementById('search-input').value;
-        renderGames('All', term);
-        document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active-tab'));
-    }
-
-    // --- AI Assistant Chat Functions ---
-
-    function toggleChat() {
-        chatWindow.classList.toggle('hidden');
-        const icon = chatToggleBtn.querySelector('i');
-        icon.setAttribute('data-lucide', chatWindow.classList.contains('hidden') ? 'message-square' : 'x');
-        lucide.createIcons();
-
-        if (!chatWindow.classList.contains('hidden')) {
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-    }
-
-    function displayMessage(content, sources = [], isUser = false) {
-        const messageContainer = document.createElement('div');
-        messageContainer.className = `flex ${isUser ? 'justify-end' : 'justify-start'}`;
-        
-        const messageBubble = document.createElement('div');
-        messageBubble.className = `p-3 max-w-[80%] shadow-md text-sm break-words ${
-            isUser 
-            ? 'bg-cyan-600 text-white rounded-xl rounded-br-none' 
-            : 'bg-gray-700 text-white rounded-xl rounded-tl-none'
-        }`;
-        
-        messageBubble.textContent = content; 
-
-        if (sources.length > 0 && !isUser) {
-            sources.forEach(source => {
-                const citationLink = document.createElement('a');
-                citationLink.href = source.uri;
-                citationLink.target = "_blank";
-                citationLink.className = 'citation truncate mt-1';
-                citationLink.textContent = `Source: ${source.title || source.uri}`;
-                messageBubble.appendChild(citationLink);
-            });
-        }
-
-        messageContainer.appendChild(messageBubble);
-        chatMessages.appendChild(messageContainer);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-
-    function sendUserMessage() {
-        if (isTyping) return;
-
-        const userText = chatInput.value.trim();
-        if (userText === '') return;
-
-        displayMessage(userText, [], true);
-        chatInput.value = '';
-        
-        callGeminiAPI(userText);
-    }
-
-    async function callGeminiAPI(userQuery) {
-        isTyping = true;
-        sendBtn.disabled = true;
-        chatInput.disabled = true;
-
-        const thinkingMessage = document.createElement('div');
-        thinkingMessage.className = 'flex justify-start';
-        thinkingMessage.innerHTML = '<div id="thinking-bubble" class="bg-gray-700 text-white p-3 rounded-xl rounded-tl-none max-w-[80%] shadow-md text-sm">...Searching the web</div>';
-        chatMessages.appendChild(thinkingMessage);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-
-        if (!apiKey && typeof __initial_auth_token === 'undefined') {
-             thinkingMessage.remove();
-             displayMessage("The **Grounded AI Assistant is blocked**! For external hosting (like GitHub Pages), you must insert your personal **Gemini API Key** into the 'apiKey' variable in the script section.", [], false);
-             isTyping = false;
-             sendBtn.disabled = false;
-             chatInput.disabled = false;
-             return;
-        }
-
-        const systemPrompt = "You are a friendly, concise, and highly knowledgeable AI assistant for an unblocked games portal called Universal Arcade. Your goal is to answer questions clearly and accurately using the provided search results when necessary.";
-
-        const payload = {
-            contents: [{ parts: [{ text: userQuery }] }],
-            tools: [{ "google_search": {} }], 
-            systemInstruction: {
-                parts: [{ text: systemPrompt }]
-            },
-        };
-
-        const apiUrl = `${GEMINI_API_URL}?key=${apiKey}`;
-
-        const maxRetries = 5;
-        let response = null;
-        let success = false;
-        
-        for (let i = 0; i < maxRetries; i++) {
-            try {
-                response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (response.ok) {
-                    success = true;
-                    break; 
-                }
-            } catch (e) {
-                console.error(`Attempt ${i + 1} failed:`, e);
-            }
-            const delay = Math.pow(2, i) * 1000;
-            if (i < maxRetries - 1) {
-                await new Promise(resolve => setTimeout(resolve, delay));
-            }
-        }
-
-        thinkingMessage.remove();
-
-        if (success) {
-            const result = await response.json();
-            const candidate = result.candidates?.[0];
-            
-            let assistantText = "Sorry, I ran into an error getting that information from the AI model.";
-            let sources = [];
-
-            if (candidate && candidate.content?.parts?.[0]?.text) {
-                assistantText = candidate.content.parts[0].text;
-
-                const groundingMetadata = candidate.groundingMetadata;
-                if (groundingMetadata && groundingMetadata.groundingAttributions) {
-                    sources = groundingMetadata.groundingAttributions
-                        .map(attribution => ({
-                            uri: attribution.web?.uri,
-                            title: attribution.web?.title,
-                        }))
-                        .filter(source => source.uri && source.title);
-                }
-            }
-
-            displayMessage(assistantText, sources, false);
-            
-        } else {
-            displayMessage("Oops! I failed to connect to the Gemini API after multiple retries. Please check your network connection or API key status.", [], false);
-        }
-
-        isTyping = false;
-        sendBtn.disabled = false;
-        chatInput.disabled = false;
-        chatInput.focus();
-    }
-
-    // --- Event Listeners and Initialization ---
-    document.querySelectorAll('.tab-button').forEach(btn => {
-        btn.addEventListener('click', () => switchCategory(btn.dataset.category));
+function renderGames(category, searchTerm='') {
+    const filteredGames = allGames.filter(game=>{
+        const catMatch = category==='All'||game.category===category||(category==='Featured'&&game.category==='Featured');
+        const searchMatch = game.title.toLowerCase().includes(searchTerm.toLowerCase());
+        return catMatch && searchMatch;
     });
+    gamesGrid.innerHTML='';
+    if(filteredGames.length===0){ noResults.classList.remove('hidden'); }
+    else{ noResults.classList.add('hidden'); filteredGames.forEach(game=>gamesGrid.insertAdjacentHTML('beforeend',renderGameCard(game))); lucide.createIcons();}
+}
 
-    chatToggleBtn.addEventListener('click', toggleChat);
+function switchCategory(newCategory){
+    currentCategory=newCategory;
+    document.querySelectorAll('.tab-button').forEach(btn=>btn.classList.toggle('active-tab',btn.dataset.category===newCategory));
+    renderGames(currentCategory);
+}
 
-    // Initialize the dashboard on load
-    window.onload = () => loadGames();
+document.querySelectorAll('.tab-button').forEach(btn=>btn.addEventListener('click',()=>switchCategory(btn.dataset.category)));
+window.onload=()=>loadGames();
 </script>
 </body>
 </html>
